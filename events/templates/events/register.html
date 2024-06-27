@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for {{ event.title }}</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts for DM Serif Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'DM Serif Display', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--container-bg-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--heading-color);
+        }
+        .form-label {
+            color: var(--label-color);
+        }
+        .input-field input[type="text"]:focus + label,
+        .input-field input[type="email"]:focus + label,
+        .input-field input[type="password"]:focus + label {
+            color: var(--label-focus-color);
+        }
+        .input-field input[type="text"]:focus,
+        .input-field input[type="email"]:focus,
+        .input-field input[type="password"]:focus {
+            border-bottom: 1px solid var(--input-focus-border-color);
+            box-shadow: 0 1px 0 0 var(--input-focus-shadow-color);
+        }
+        .btn {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border-radius: 8px;
+        }
+        .btn:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+        .material-icons {
+            color: var(--icon-color);
+        }
+        .nav-wrapper {
+            background-color: var(--nav-bg-color);
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--nav-text-color);
+        }
+        .nav-links {
+            margin-left: auto;
+        }
+        .nav-links li {
+            margin-left: 1rem;
+        }
+        .nav-links a {
+            color: var(--nav-text-color);
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        /* Dark mode specific styles */
+        body.dark-mode {
+            --bg-color: #1a202c;
+            --text-color: #cbd5e0;
+            --container-bg-color: #2d3748;
+            --heading-color: #cbd5e0;
+            --label-color: #cbd5e0;
+            --label-focus-color: #cbd5e0;
+            --input-focus-border-color: #cbd5e0;
+            --input-focus-shadow-color: #cbd5e0;
+            --button-bg-color: #4a5568;
+            --button-text-color: #cbd5e0;
+            --button-hover-bg-color: #2d3748;
+            --icon-color: #cbd5e0;
+            --nav-bg-color: #2d3748;
+            --nav-text-color: #cbd5e0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Navigation bar -->
+    <nav>
+        <div class="nav-wrapper">
+            <a href="{% url 'home' %}" class="brand-logo dm-serif-display-regular">College Events</a>
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down nav-links">
+                <li><a href="{% url 'home' %}" class="dm-serif-display-regular">Home</a></li>
+                <li><a href="#" class="dm-serif-display-regular">About</a></li>
+                <li><a href="#" class="dm-serif-display-regular">Events</a></li>
+                <li><a href="#" class="dm-serif-display-regular">Contact</a></li>
+                <li>
+                    <label for="dark-mode-switch" class="dm-serif-display-regular">Dark Mode</label>
+                    <input type="checkbox" id="dark-mode-switch">
+                    <i class="material-icons">brightness_4</i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation (SideNav) -->
+    <ul class="sidenav" id="mobile-nav">
+        <li><a href="{% url 'home' %}" class="dm-serif-display-regular">Home</a></li>
+        <li><a href="#" class="dm-serif-display-regular">About</a></li>
+        <li><a href="#" class="dm-serif-display-regular">Events</a></li>
+        <li><a href="#" class="dm-serif-display-regular">Contact</a></li>
+    </ul>
+
+    <div class="container">
+        <h1 class="dm-serif-display-regular">Registration for {{ event.title }}</h1>
+        <form method="post" class="col s12">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="input-field">
+                <label for="id_team_name" class="form-label">Team Name:</label>
+                {{ form.team_name }}
+            </div>
+
+            {% for field in form.visible_fields %}
+                <div class="input-field">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn waves-effect waves-light">Register
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+
+        <!-- WhatsApp Group Link Section -->
+        {% if registration_complete %}
+        <div id="popup" class="modal">
+            <div class="modal-content">
+                <h4>Congratulations!</h4>
+                <p>Your registration for {{ event.title }} is successful.</p>
+                <p>Join our WhatsApp group for further updates:</p>
+                <a href="{{ event.whatsapp_group_link }}" class="btn waves-effect waves-light" target="_blank">Join WhatsApp Group</a>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Dark Mode Toggle JavaScript -->
+    <script>
+        const darkModeSwitch = document.querySelector('#dark-mode-switch');
+        darkModeSwitch.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        // Check for previously set dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeEnabled = JSON.parse(localStorage.getItem('darkMode')) || false;
+            if (darkModeEnabled) {
+                document.body.classList.add('dark-mode');
+                darkModeSwitch.checked = true;
+            }
+        });
+
+        // Initialize Materialize components
+        document.addEventListener('DOMContentLoaded', function() {
+            const elems = document.querySelectorAll('.sidenav');
+            const instances = M.Sidenav.init(elems);
+
+            // Initialize modal
+            const modalElems = document.querySelectorAll('.modal');
+            const modalInstances = M.Modal.init(modalElems, {dismissible: false});
+
+            // Open the modal on page load if registration_complete is true
+            const registrationComplete = {{ registration_complete|lower }};
+            if (registrationComplete) {
+                const popup = document.getElementById('popup');
+                const modalInstance = M.Modal.getInstance(popup);
+                modalInstance.open();
+            }
+        });
+    </script>
+</body>
+</html>

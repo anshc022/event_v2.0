@@ -1,0 +1,65 @@
+<!-- events/templates/events/pdf_template.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrations PDF</title>
+    <style>
+        /* Define your CSS styles for the PDF here */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        .team-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registered Teams</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Member Name</th>
+                <th>VTU Number</th>
+                <th>Year</th>
+                <th>Team Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registration in registrations %}
+                {% for member in registration.members %}
+                    <tr>
+                        {% if forloop.first %}
+                            <td rowspan="{{ registration.members|length }}" class="team-name">{{ registration.team_name }}</td>
+                            <td>{{ member.name }}</td>
+                            <td>{{ member.vtu_number }}</td>
+                            <td>{{ member.year }}</td>
+                            <td rowspan="{{ registration.members|length }}">{{ registration.team_number }}</td>
+                        {% else %}
+                            <td>{{ member.name }}</td>
+                            <td>{{ member.vtu_number }}</td>
+                            <td>{{ member.year }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

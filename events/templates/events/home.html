@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" crossorigin="anonymous" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+        body {
+            font-family: 'Exo', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .dm-serif-display-regular {
+            font-family: "DM Serif Display", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .dm-serif-display-regular-italic {
+            font-family: "DM Serif Display", serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Page Loader Styles */
+        #loader-wrapper {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loader {
+            width: 80px;
+            height: 80px;
+            border: 10px solid #3498db;
+            border-radius: 50%;
+            border-top-color: #e74c3c;
+            animation: spin 1.5s infinite linear;
+        }
+
+        .loader-section {
+            position: fixed;
+            top: 0;
+            width: 51%;
+            height: 100%;
+            background-color: #f5f5f5;
+            z-index: 9998;
+        }
+
+        .section-left {
+            left: 0;
+        }
+
+        .section-right {
+            right: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .area {
+            background: #4e54c8;
+            background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+
+        .circles li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+        }
+
+        .circles li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+
+        .circles li:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+        }
+
+        .circles li:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+
+        .circles li:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+        }
+
+        .circles li:nth-child(6) {
+            left: 75%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3s;
+        }
+
+        .circles li:nth-child(7) {
+            left: 35%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 7s;
+        }
+
+        .circles li:nth-child(8) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+        }
+
+        .circles li:nth-child(9) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+        }
+
+        .circles li:nth-child(10) {
+            left: 85%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 0s;
+            animation-duration: 11s;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 0;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.5); /* Adjust the opacity (fourth value) as needed */
+            border-radius: 10px; /* Optional: Add border radius for rounded corners */
+            overflow: hidden; /* Optional: Ensure content does not overflow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
+            transition: background-color 0.3s ease; /* Optional: Add smooth transition */
+        }
+
+        .card:hover {
+            background-color: rgba(255, 255, 255, 0.7); /* Adjust hover opacity if desired */
+        }
+
+        .card-content {
+            padding: 16px; /* Optional: Add padding to content for spacing */
+        }
+
+        .card-action {
+            background-color: rgba(0, 0, 0, 0.1); /* Optional: Add a semi-transparent background to action area */
+            padding: 12px; /* Optional: Adjust padding for action area */
+        }
+
+        .card-action a {
+            color: #2196F3; /* Optional: Adjust link color */
+            text-decoration: none; /* Optional: Remove underline */
+        }
+
+        .card-action a:hover {
+            text-decoration: underline; /* Optional: Add underline on hover */
+        }
+
+        footer {
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust background color and opacity as needed */
+        color: #ffffff; /* Set text color to white or a contrasting color */
+        padding: 20px; /* Adjust padding for spacing */
+        text-align: center; /* Align text to center if needed */
+    }
+
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        footer .social-icons a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="grey lighten-4">
+    <!-- Background Animation -->
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="white z-depth-1">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo blue-text text-darken-4 dm-serif-display-regular">
+                <i class="material-icons">home</i>
+            </a>
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#upcoming" class="grey-text text-darken-3 dm-serif-display-regular">Upcoming Events</a></li>
+                <li><a href="#past" class="grey-text text-darken-3 dm-serif-display-regular">Past Events</a></li>
+                <li><a href="#contact" class="grey-text text-darken-3 dm-serif-display-regular">Contact</a></li>
+            </ul>
+            <!-- Mobile Navigation Menu -->
+            <ul class="sidenav" id="mobile-nav">
+                <li><a href="#upcoming" class="grey-text text-darken-3 dm-serif-display-regular">Upcoming Events</a></li>
+                <li><a href="#past" class="grey-text text-darken-3 dm-serif-display-regular">Past Events</a></li>
+                <li><a href="#contact" class="grey-text text-darken-3 dm-serif-display-regular">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 id="upcoming" class="white-text text-darken-4 dm-serif-display-regular">Upcoming Events</h1>
+        <div class="row">
+            <!-- Loop through upcoming events -->
+            {% for event in upcoming_events %}
+                <div class="col s12 m6 l4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ event.banner_image }}" alt="{{ event.title }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title dm-serif-display-regular">{{ event.title }}</span>
+                            <p class="dm-serif-display-regular">{{ event.description|truncatewords:30 }}</p>
+                            <p class="dm-serif-display-regular" style="color: rgb(65, 4, 4); font-weight: bold;">
+                                <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
+                            </p>
+                            <p class="dm-serif-display-regular" style="color: rgb(65, 4, 4); font-weight: bold;">
+                                <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h1 id="past" class="white-text text-darken-4 dm-serif-display-regular">Past Events</h1>
+        <div class="row">
+            <!-- Loop through past events -->
+            {% for event in past_events %}
+                <div class="col s12 m6 l4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ event.banner_image }}" alt="{{ event.title }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title dm-serif-display-regular">{{ event.title }}</span>
+                            <p class="dm-serif-display-regular">{{ event.description|truncatewords:30 }}</p>
+                            <p class="dm-serif-display-regular">
+                                <strong class="green-text">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
+                            </p>
+                            <p class="dm-serif-display-regular">
+                                <strong class="red-text">Registration Deadline:</strong> {{ event.registration_deadline }}
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="dm-serif-display-regular">&copy; 2024 College Events. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="material-icons">facebook</i></a>
+                <a href="#"><i class="material-icons">twitter</i></a>
+                <a href="#"><i class="material-icons">instagram</i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a> <!-- LinkedIn icon -->
+            </div>
+        </div>
+    </footer>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Sidenav for Mobile Menu
+            M.Sidenav.init(document.querySelectorAll('.sidenav'));
+
+            // Hide Loader once the page is fully loaded
+            const loaderWrapper = document.getElementById('loader-wrapper');
+            loaderWrapper.style.display = 'none';
+        });
+    </script>
+    
+</body>
+</html>
