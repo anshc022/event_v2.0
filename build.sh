@@ -1,6 +1,9 @@
-tall -r requirements.txt
+#!/bin/bash
 
-echo "BUILD START"
- python3.9 -m pip install -r requirements.txt
- python3.9 manage.py collectstatic --noinput --clear
- echo "BUILD END"
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Run Django management commands
+python manage.py migrate
+python manage.py collectstatic --noinput
