@@ -1,0 +1,36 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+  {{ block.super }}
+  {% if registrations %}
+    <h2 class="text-2xl font-bold mb-4">Registered Teams</h2>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Team Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">VTU Number</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Team Number</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for registration in registrations %}
+          {% for member in registration.members %}
+            <tr class="hover:bg-gray-100">
+              {% if forloop.first %} {# Only display team name in the first row of each team #}
+                <td rowspan="{{ registration.members|length }}" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ registration.team_name }}</td>
+              {% endif %}
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ member.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ member.vtu_number }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ member.year }}</td>
+              {% if forloop.first %} {# Only display team number in the first row of each team #}
+                <td rowspan="{{ registration.members|length }}" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ registration.team_number }}</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}
