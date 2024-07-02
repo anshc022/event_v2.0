@@ -275,46 +275,27 @@ body {
     color: #0D47A1; /* Adjust hover color if desired */
 }
 
-/* Navigation Bar */
-nav {
-    background-color: #ffffff; /* Background color */
-    color: #333; /* Text color */
-    position: fixed; /* Fixed position */
-    top: 0; /* Stick to the top */
-    width: 100%; /* Full width */
-    z-index: 1000; /* Ensure it's above other content */
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
-}
-
-nav .brand-logo {
-    color: #1976D2; /* Brand logo color */
-    font-size: 1.5rem; /* Adjust font size */
-}
-
-nav ul {
-    list-style-type: none; /* Remove list bullets */
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Hide overflow */
-    display: flex; /* Flexbox layout */
-    justify-content: flex-end; /* Align items to the end */
-}
-
-nav ul li {
-    padding: 10px 20px; /* Padding around each list item */
-}
-
-nav ul li a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Text color */
-    transition: color 0.3s ease; /* Smooth color transition */
-}
-
-nav ul li a:hover {
-    color: #1976D2; /* Hover color */
-}
 
 /* Optional: Blur Effect */
 .blur {
     filter: blur(5px); /* Optional: Add blur effect */
+}
+/* Custom Navbar Styles */
+
+
+.sidenav {
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust the background color and opacity */
+}
+
+.sidenav li {
+    padding: 15px 20px; /* Adjust padding as needed */
+}
+
+.sidenav a {
+    color: #fff; /* Adjust the text color */
+    font-weight: bold; /* Optional: Adjust font weight */
+}
+
+.sidenav a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Adjust hover background color and opacity */
 }
