@@ -14,6 +14,7 @@
             padding: 0;
             overflow-x: hidden;
             background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            position: relative; /* Ensure the loading overlay covers the entire body */
         }
 
         .area {
@@ -158,11 +159,47 @@
         .section-title h2 {
             margin: 0;
         }
-        
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it covers everything */
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db; /* Loading spinner color */
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div class="area">
         <ul class="circles">
             <li></li>
@@ -220,20 +257,41 @@
                 </div>
             </div>
 
+            <!-- Share and Calendar Buttons -->
+            <div class="flex mt-4 space-x-4">
+                <!-- Share Event button -->
+                <button onclick="shareEvent()" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex items-center focus:outline-none">
+                    <i class="fas fa-share-alt mr-2"></i> Share
+                </button>
+                
+                <!-- Add to Calendar button -->
+                <a href="{% url 'add_to_calendar' event.id %}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded flex items-center focus:outline-none">
+                    <i class="far fa-calendar-plus mr-2"></i> Add to Calendar
+                </a>
+            </div>
+            
             <!-- Event Details -->
             <div class="section-title">
                 <h2 class="text-xl font-semibold mb-2 mt-4">Event Details</h2>
             </div>
             <p><i class="fas fa-calendar-alt text-red-500"></i> <strong class="text-red-500">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}</p>
-            <p><i class="fas fa-user-friends text-green-500"></i> <strong>Team Size:</strong> {{ event.team_size }}</p>
-            <p><i class="fas fa-clock text-purple-500"></i> <strong>Registration Deadline:</strong> {{ event.registration_deadline }}</p>
-            <p class="flex items-center"><i class="fas fa-ticket-alt text-blue-500 mr-2"></i> Slots Left: {{ slots_left }}</p>
-            <div class="mt-4" id="prizes">
-                <h3 class="text-lg font-semibold"><i class="fas fa-trophy text-yellow-500"></i> Prizes</h3>
-                <ul class="list-disc pl-5">
-                    {{ event.prizes | linebreaksbr }}
-                </ul>
+            <p><i class="fas fa-user-friends text-green-500"></i> <strong class="text-green-500">Event Type:</strong> {{ event.event_type }}</p>
+
+            <!-- Rounds -->
+            <div class="section-title">
+                <h2 class="text-xl font-semibold mb-2 mt-4">Rounds</h2>
             </div>
+            <ul class="list-disc pl-5">
+                {{ event.rounds | linebreaksbr }}
+            </ul>
+
+            <!-- Prizes -->
+            <div class="section-title">
+                <h2 class="text-xl font-semibold mb-2 mt-4">Prizes</h2>
+            </div>
+            <ul class="list-disc pl-5">
+                {{ event.prizes | linebreaksbr }}
+            </ul>
 
             <!-- Event Description -->
             <div class="section-title">
@@ -265,49 +323,73 @@
             </ul>
 
             <!-- Register Button -->
-<!-- Register Button -->
-<div class="tile flex items-center justify-center">
-    {% if event.registration_open %}
-        <a href="{% url 'register' event.id %}" class="button bg-green-500 text-white py-2 px-4 rounded">Register</a>
-    {% else %}
-        <button onclick="alert('Registration for this event has closed. For further inquiries, please contact event coordinators.');" class="button bg-red-500 text-white py-2 px-4 rounded">Register closed</button>
-        <!-- You can customize the popup message or behavior -->
-    {% endif %}
-</div>
-
-<div id="registerModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-    <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
-    <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
-        <h2 class="text-2xl font-semibold mb-4">Register for {{ event.title }}</h2>
-        <form id="registrationForm" method="post" action="{% url 'register' event.id %}" class="space-y-4">
-            {% csrf_token %}
-            <!-- Form fields go here -->
-            <!-- Example: -->
-            <div>
-                <label for="team_name" class="block font-medium text-gray-700">Team Name:</label>
-                <input type="text" id="team_name" name="team_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <div class="tile flex items-center justify-center">
+                {% if event.registration_open %}
+                    <a href="{% url 'register' event.id %}" class="button bg-green-500 text-white py-2 px-4 rounded">Register</a>
+                {% else %}
+                    <button onclick="alert('Registration for this event has closed. For further inquiries, please contact event coordinators.');" class="button bg-red-500 text-white py-2 px-4 rounded">Register closed</button>
+                {% endif %}
             </div>
-            <!-- Add other fields as per your form -->
 
-            <div class="flex justify-end">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Register
-                </button>
-                <button type="button" onclick="closeModal()" class="ml-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Cancel
-                </button>
+            <div id="registerModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+                <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+                <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+                    <h2 class="text-2xl font-semibold mb-4">Register for {{ event.title }}</h2>
+                    <form id="registrationForm" method="post" action="{% url 'register' event.id %}" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <label for="team_name" class="block font-medium text-gray-700">Team Name:</label>
+                            <input type="text" id="team_name" name="team_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Register
+                            </button>
+                            <button type="button" onclick="closeModal()" class="ml-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Remove loading overlay when content is loaded
+            document.getElementById('loadingOverlay').style.display = 'none';
+        });
+
         document.getElementById('nav-toggle').onclick = function () {
             var navContent = document.getElementById('nav-content');
             navContent.classList.toggle('hidden');
         }
-        
+
+        function shareEvent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '{{ event.title }}',
+                    text: 'Check out this event: {{ event.title }}',
+                    url: window.location.href,
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((error) => {
+                    console.log('Error sharing:', error);
+                });
+            } else {
+                alert('Web Share API is not supported in your browser.');
+            }
+        }
+
+        function addToCalendar() {
+            alert('Add to calendar functionality is not yet implemented.');
+            // Implement add to calendar functionality here
+        }
+
+        function closeModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
     </script>
 </body>
 

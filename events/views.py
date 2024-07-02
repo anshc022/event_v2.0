@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseForbidden, HttpResponse
 from .models import Event, Registration
 from .forms import RegistrationForm
-import datetime
-from django.http import HttpResponseForbidden
-from django.http import HttpResponse
-from django.http import HttpResponse
 import csv
-from django.utils.encoding import smart_str
-from .models import Event, Registration
+from icalendar import Calendar, Event as CalendarEvent
+from django.utils.timezone import localtime, make_aware
+from .models import Event  
+import datetime
 
 def home(request):
     today = datetime.date.today()
@@ -24,7 +23,12 @@ def event_detail(request, event_id):
     # Calculate available slots left
     slots_left = event.max_teams - registered_teams_count
     
-    return render(request, 'events/event_detail.html', {'event': event, 'slots_left': slots_left})
+    return render(request, 'events/event_detail.html', {
+        'event': event,
+        'slots_left': slots_left,
+        'event_date': event.event_date,
+        'event_time': event.event_time,
+    })
 
 def register(request, event_id):
     event = get_object_or_404(Event, id=event_id)
@@ -65,6 +69,7 @@ def register(request, event_id):
         form = RegistrationForm(team_size=event.team_size)
     
     return render(request, 'events/register.html', {'form': form, 'event': event})
+
 def download_registrations_details(request, pk):
     event = Event.objects.get(pk=pk)
     registrations = Registration.objects.filter(event=event)
@@ -81,7 +86,36 @@ def download_registrations_details(request, pk):
                 registration.team_name,
                 member['name'],
                 member['vtu_number'],
-                member['year']
+                member['year'],
             ])
 
+    return response
+
+def add_to_calendar(request, event_id):
+    # Get the event object
+    event = get_object_or_404(Event, id=event_id)
+
+    # Ensure event_date is a datetime object and make it timezone-aware if it's naive
+    event_datetime = datetime.datetime.combine(event.event_date, datetime.time.min)
+    
+    if not event_datetime.tzinfo:  # Check if event_datetime is naive
+        event_datetime = make_aware(event_datetime)  # Make it timezone-aware
+
+    # Create a new iCalendar instance
+    cal = Calendar()
+
+    # Create an event
+    cal_event = CalendarEvent()
+    cal_event.add('summary', event.title)
+    cal_event.add('dtstart', localtime(event_datetime))
+    cal_event.add('dtend', localtime(event_datetime))
+    cal_event.add('location', event.location)  # Optional: Add event location
+    cal_event.add('description', event.description)  # Optional: Add event description
+
+    # Add event to calendar
+    cal.add_component(cal_event)
+
+    # Return response with .ics file
+    response = HttpResponse(cal.to_ical(), content_type='text/calendar')
+    response['Content-Disposition'] = f'attachment; filename="event_{event.id}.ics"'
     return response
