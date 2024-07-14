@@ -270,28 +270,20 @@
                 </a>
             </div>
             
-            <!-- Event Details -->
-            <div class="section-title">
-                <h2 class="text-xl font-semibold mb-2 mt-4">Event Details</h2>
-            </div>
-            <p><i class="fas fa-calendar-alt text-red-500"></i> <strong class="text-red-500">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}</p>
-            <p><i class="fas fa-user-friends text-green-500"></i> <strong class="text-green-500">Event Type:</strong> {{ event.event_type }}</p>
-
-            <!-- Rounds -->
-            <div class="section-title">
-                <h2 class="text-xl font-semibold mb-2 mt-4">Rounds</h2>
-            </div>
-            <ul class="list-disc pl-5">
-                {{ event.rounds | linebreaksbr }}
-            </ul>
-
-            <!-- Prizes -->
-            <div class="section-title">
-                <h2 class="text-xl font-semibold mb-2 mt-4">Prizes</h2>
-            </div>
-            <ul class="list-disc pl-5">
-                {{ event.prizes | linebreaksbr }}
-            </ul>
+   <!-- Event Details -->
+   <div class="section-title">
+    <h2 class="text-xl font-semibold mb-2 mt-4">Event Details</h2>
+</div>
+<p><i class="fas fa-calendar-alt text-red-500"></i> <strong class="text-red-500">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}</p>
+<p><i class="fas fa-user-friends text-green-500"></i> <strong>Team Size:</strong> {{ event.team_size }}</p>
+<p><i class="fas fa-clock text-purple-500"></i> <strong>Registration Deadline:</strong> {{ event.registration_deadline }}</p>
+<p class="flex items-center"><i class="fas fa-ticket-alt text-blue-500 mr-2"></i> Slots Left: {{ slots_left }}</p>
+<div class="mt-4" id="prizes">
+    <h3 class="text-lg font-semibold"><i class="fas fa-trophy text-yellow-500"></i> Prizes</h3>
+    <ul class="list-disc pl-5">
+        {{ event.prizes | linebreaksbr }}
+    </ul>
+</div>
 
             <!-- Event Description -->
             <div class="section-title">
