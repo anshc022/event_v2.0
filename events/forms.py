@@ -40,8 +40,7 @@ class RegistrationForm(forms.ModelForm):
         email = cleaned_data.get('member1_email')
         domain = cleaned_data.get('domain')
 
-        if email and domain and not email.endswith(f"@{domain}"):
-            raise ValidationError(f"Email must be in the domain: @{domain}")
+        # No specific domain validation for the email as "domain" refers to event theme
 
         return cleaned_data
 
