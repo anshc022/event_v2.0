@@ -301,7 +301,10 @@
                 <h2 class="text-xl font-semibold mb-2 mt-4">Event Description</h2>
             </div>
             <p>{{ event.description }}</p>
-
+            <div class="section-title">
+                <h2 class="text-xl font-semibold mb-2 mt-4">Additional Information:</h2>
+            </div>
+            <p>{{ event.additional_information|linebreaks }}</p>
             <!-- General Rules -->
             <div class="section-title">
                 <h2 class="text-xl font-semibold mb-2 mt-4">General Rules</h2>
