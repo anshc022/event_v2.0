@@ -2,10 +2,20 @@ from django.db import models
 from django.utils import timezone
 
 class Domain(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    FULL_STACK = 'FS'
+    AI_ML = 'AI'
+    IOT = 'IOT'
+
+    DOMAIN_CHOICES = [
+        (FULL_STACK, 'Full Stack'),
+        (AI_ML, 'AI & ML'),
+        (IOT, 'IoT'),
+    ]
+
+    name = models.CharField(max_length=100, unique=True, choices=DOMAIN_CHOICES)
 
     def __str__(self):
-        return self.name
+        return self.get_name_display()
 
 class Coordinator(models.Model):
     name = models.CharField(max_length=100)
@@ -55,8 +65,8 @@ class Event(models.Model):
 class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100)
-    domain = models.ForeignKey(Domain, on_delete=models.SET_NULL, null=True)  # ForeignKey to Domain model
-    members = models.JSONField(default=list)  # Use Django's built-in JSONField with a default value
+    domain = models.ForeignKey(Domain, on_delete=models.SET_NULL, null=True)
+    members = models.JSONField(default=list)
 
     def __str__(self):
         return self.team_name

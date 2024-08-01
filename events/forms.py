@@ -11,21 +11,12 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
-    DOMAINS = [
-        ('AI', 'Artificial Intelligence'),
-        ('ML', 'Machine Learning'),
-        ('WEB', 'Web Development'),
-        ('MOBILE', 'Mobile Development'),
-        ('IOT', 'Internet of Things'),
-        # Add more domains as needed
-    ]
-
     def __init__(self, *args, **kwargs):
         team_size = kwargs.pop('team_size', 3)  # default to 3 if not provided
         super().__init__(*args, **kwargs)
         
         self.fields['team_name'] = forms.CharField(max_length=100, label='Team Name')
-        self.fields['domain'] = forms.ChoiceField(choices=self.DOMAINS, label='Domain')
+        self.fields['domain'] = forms.ModelChoiceField(queryset=Domain.objects.all(), label='Domain')
 
         for i in range(1, team_size + 1):
             self.fields[f'member{i}_name'] = forms.CharField(max_length=100, label=f'Member {i} Name')
@@ -37,4 +28,4 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Registration
-        fields = ['team_name', 'domain']  # Include domain field here if you want to save it in the model.py 
+        fields = ['team_name', 'domain']
