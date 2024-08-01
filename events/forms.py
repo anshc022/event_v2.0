@@ -12,13 +12,12 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
-    DOMAIN_CHOICES = [
-        ('IoT', 'IoT'),
-        ('Full Stack', 'Full Stack'),
-        ('AI/ML', 'AI/ML'),
-    ]
-
-    domain = forms.ChoiceField(choices=DOMAIN_CHOICES, required=True, label='Domain')
+    domain = forms.CharField(
+        max_length=100, 
+        required=True, 
+        label='Domain (e.g., IoT, Full Stack, AI/ML)', 
+        help_text='Specify the domain for your registration (e.g., IoT, Full Stack, AI/ML)'
+    )
 
     def __init__(self, *args, **kwargs):
         team_size = kwargs.pop('team_size', 3)  # Default to 3 if not provided
