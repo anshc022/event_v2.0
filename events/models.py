@@ -47,17 +47,10 @@ class Event(models.Model):
         return not self.registration_open()
 
 class Registration(models.Model):
-    DOMAIN_CHOICES = [
-        ('iot', 'IoT'),
-        ('full_stack', 'Full Stack'),
-        ('ai_ml', 'AI/ML'),
-    ]
-
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100)
     members = models.JSONField(default=list)  # Use Django's built-in JSONField with a default value
-    domain = models.CharField(max_length=20, choices=DOMAIN_CHOICES, blank=True, null=True)  # Field for domain
-    member1_email = models.EmailField(blank=True, null=True)  # Email for the first member
+    domain = models.CharField(max_length=100, blank=True, null=True)  # New field for domain
 
     def __str__(self):
         return self.team_name

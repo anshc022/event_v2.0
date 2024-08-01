@@ -12,9 +12,7 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
-    DOMAIN_CHOICES = Registration.DOMAIN_CHOICES
-    
-    domain = forms.ChoiceField(choices=DOMAIN_CHOICES, required=True, label='Domain')
+    domain = forms.CharField(max_length=100, required=True, label='Domain')
 
     def __init__(self, *args, **kwargs):
         team_size = kwargs.pop('team_size', 3)  # Default to 3 if not provided
