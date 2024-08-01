@@ -1,6 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
+class Domain(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Coordinator(models.Model):
     name = models.CharField(max_length=100)
     vtu_number = models.CharField(max_length=10)
@@ -49,6 +55,7 @@ class Event(models.Model):
 class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100)
+    domain = models.ForeignKey(Domain, on_delete=models.SET_NULL, null=True)  # ForeignKey to Domain model
     members = models.JSONField(default=list)  # Use Django's built-in JSONField with a default value
 
     def __str__(self):

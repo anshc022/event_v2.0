@@ -2,16 +2,16 @@ import csv
 import io
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Event, Coordinator, StudentCoordinator, Registration
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
+from .models import Event, Coordinator, StudentCoordinator, Registration, Domain
 
 class RegistrationInline(admin.TabularInline):
     model = Registration
     extra = 0  # To prevent extra empty forms
-    fields = ('team_name', 'members_display')
+    fields = ('team_name', 'members_display', 'domain')
     readonly_fields = ('members_display',)
 
     def members_display(self, obj):
@@ -129,3 +129,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Coordinator)
 admin.site.register(StudentCoordinator)
 admin.site.register(Registration)
+admin.site.register(Domain)
