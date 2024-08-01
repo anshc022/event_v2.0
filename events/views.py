@@ -85,12 +85,7 @@ def register(request, event_id):
     return render(request, 'events/register.html', {'form': form, 'event': event})
 
 def get_duplicate_vtu_number(event, members_data):
-    registered_vtu_numbers = set()
-    registrations = Registration.objects.filter(event=event)
-    
-    for registration in registrations:
-        for member in registration.members:
-            registered_vtu_numbers.add(member['vtu_number'])
+    registered_vtu_numbers = {member['vtu_number'] for registration in Registration.objects.filter(event=event) for member in registration.members}
     
     for member in members_data:
         if member['vtu_number'] in registered_vtu_numbers:
