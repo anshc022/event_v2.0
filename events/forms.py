@@ -1,9 +1,6 @@
-# forms.py
-
 from django import forms
-from .models import Registration
-from django import forms
-from .models import Event
+from .models import Registration, Event
+from django.core.exceptions import ValidationError
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -15,16 +12,34 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
+    domain = forms.CharField(max_length=100, required=True, label='Domain')
+
     def __init__(self, *args, **kwargs):
-        team_size = kwargs.pop('team_size', 3)  # default to 3 if not provided
+        team_size = kwargs.pop('team_size', 3)  # Default to 3 if not provided
         super().__init__(*args, **kwargs)
-        
+
         self.fields['team_name'] = forms.CharField(max_length=100, label='Team Name')
+
+        # Add fields for each team member
         for i in range(1, team_size + 1):
             self.fields[f'member{i}_name'] = forms.CharField(max_length=100, label=f'Member {i} Name')
             self.fields[f'member{i}_vtu_number'] = forms.CharField(max_length=20, label=f'Member {i} VTU Number')
             self.fields[f'member{i}_year'] = forms.IntegerField(label=f'Member {i} Year')
 
+        # Add email field only for the first member
+        if team_size > 0:
+            self.fields['member1_email'] = forms.EmailField(label='Member 1 Email ID')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('member1_email')
+        domain = cleaned_data.get('domain')
+
+        if email and domain and not email.endswith(f"@{domain}"):
+            raise ValidationError(f"Email must be in the domain: @{domain}")
+
+        return cleaned_data
+
     class Meta:
         model = Registration
-        fields = ['team_name']  # Include team_name field here if you want to save it in the model
+        fields = ['team_name', 'domain', 'member1_email']  # Include team_name, domain, and member1_email fields here
