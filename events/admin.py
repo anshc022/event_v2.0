@@ -2,16 +2,16 @@ import csv
 import io
 from django.contrib import admin
 from django.http import HttpResponse
+from .models import Event, Coordinator, StudentCoordinator, Registration
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
-from .models import Event, Coordinator, StudentCoordinator, Registration, Domain
 
 class RegistrationInline(admin.TabularInline):
     model = Registration
-    extra = 0
-    fields = ('team_name', 'members_display', 'domain')
+    extra = 0  # To prevent extra empty forms
+    fields = ('team_name', 'members_display')
     readonly_fields = ('members_display',)
 
     def members_display(self, obj):
@@ -57,39 +57,46 @@ class EventAdmin(admin.ModelAdmin):
 
         styles = getSampleStyleSheet()
         title_style = styles['Title']
-        date_style = ParagraphStyle(name='DateStyle', parent=styles['Normal'], alignment=2)
+        date_style = ParagraphStyle(name='DateStyle', parent=styles['Normal'], alignment=2)  # Alignment 2 is for right align
 
         for event in queryset:
             registrations = event.registration_set.all()
 
+            # Add Event Name (centered at the top)
             event_name = Paragraph(event.title, title_style)
             elements.append(event_name)
 
+            # Add Event Date (right aligned at the top)
             event_date = Paragraph(event.event_date.strftime('%Y-%m-%d'), date_style)
             elements.append(event_date)
 
+            # Add Event Time (right aligned below date)
             event_time = Paragraph(event.event_time.strftime('%H:%M:%S'), date_style)
             elements.append(event_time)
 
+            # Add a spacer
             elements.append(Spacer(1, 20))
 
+            # Prepare data for the table
             data = []
             data.append(['TEAM NAME', 'MEMBER NAME', 'VTU NUMBER', 'YEAR', 'TEAM NUMBER'])
             for i, registration in enumerate(registrations, start=1):
                 for member in registration.members:
                     data.append([registration.team_name, member['name'], member.get('vtu_number', ''), member.get('year', ''), f'Team {i}'])
 
-            available_width = letter[0] - 72
+            # Calculate available width for the table
+            available_width = letter[0] - 72  # 1 inch margin on each side (72 points)
             
-            table = Table(data, colWidths=[available_width/5]*5)
+            # Create the table with full width
+            table = Table(data, colWidths=[available_width/5]*5)  # Divide available width into 5 equal parts
             table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),  # Header row background color
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center align all cells
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Add border lines
             ]))
 
             elements.append(table)
-            elements.append(Spacer(1, 20))
+            elements.append(Spacer(1, 20))  # Add space between tables in PDF
 
         doc.build(elements)
         pdf = buffer.getvalue()
@@ -122,4 +129,3 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Coordinator)
 admin.site.register(StudentCoordinator)
 admin.site.register(Registration)
-admin.site.register(Domain)
