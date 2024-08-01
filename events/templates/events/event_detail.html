@@ -202,6 +202,21 @@
             margin: 0;
             font-size: 1rem;
         }    
+        .whatsapp-button {
+        display: inline-block;
+        background-color: #25D366; /* WhatsApp green color */
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .whatsapp-button:hover {
+        background-color: #1ebe57; /* Darker shade for hover effect */
+    }   
     </style>
 </head>
 
@@ -315,7 +330,7 @@
             <p>{{ event.additional_information|linebreaks }}</p>
             <!-- Coordinators -->
             <div class="section-title">
-                <h2 class="text-xl font-semibold mb-2 mt-4">Coordinators</h2>
+                <h2 class="text-xl font-semibold mb-2 mt-4">Event Coordinators</h2>
             </div>
             <ul>
                 {% for coordinator in event.coordinators.all %}
@@ -327,6 +342,35 @@
                 </li>
                 {% endfor %}
             </ul>
+<!-- Student Coordinators -->
+<div class="section-title">
+    <h2 class="text-xl font-semibold mb-2 mt-4">Student Coordinators</h2>
+</div>
+<ul>
+    {% for student_coordinator in event.student_coordinators.all %}
+    <li class="flex items-center mb-4">
+        <img src="{{ student_coordinator.image_link }}" alt="{{ student_coordinator.name }}" class="w-12 h-12 rounded-full mr-4">
+        <div>
+            <p class="text-lg">{{ student_coordinator.name }} ({{ student_coordinator.year }})</p>
+            {% if student_coordinator.contact_number %}
+            <p class="text-sm text-gray-600 flex items-center">
+                <a href="https://wa.me/{{ student_coordinator.contact_number }}" class="whatsapp-button" target="_blank" title="Chat with {{ student_coordinator.name }}">
+                    <i class="fab fa-whatsapp"></i> Message
+                </a>
+            </p>
+            
+            {% endif %}
+            {% if student_coordinator.is_ieee_member %}
+                <p class="text-sm text-green-500">IEEE Member</p>
+            {% else %}
+                <p class="text-sm text-red-500">Non-IEEE Member</p>
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    <li class="text-gray-600">No student coordinators available.</li>
+    {% endfor %}
+</ul>
 
             <!-- Register Button -->
             <div class="tile flex items-center justify-center">

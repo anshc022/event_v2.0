@@ -9,10 +9,20 @@ class Coordinator(models.Model):
     def __str__(self):
         return self.name
 
+class StudentCoordinator(models.Model):
+    name = models.CharField(max_length=100)
+    year = models.CharField(max_length=50)
+    is_ieee_member = models.BooleanField(default=False)
+    contact_number = models.CharField(max_length=15, blank=True, null=True)
+    image_link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 class Event(models.Model):
     title = models.CharField(max_length=200)
     banner_image = models.URLField(default="paste banner link here")
-    event_link = models.URLField(default="paste banner link here ")
+    event_link = models.URLField(default="paste event link here")
     location = models.CharField(max_length=200)
     description = models.TextField()
     general_rules = models.TextField(default="• Participants must adhere to the theme announced at the beginning of the event.\n• All assets used in the game (art, music, etc.) must either be original or properly attributed.\n• Teams can have a maximum of 3 members.\n• Games must be submitted before the deadline to be eligible for judging.")
@@ -23,8 +33,9 @@ class Event(models.Model):
     max_teams = models.IntegerField(default=10)
     team_size = models.IntegerField(default=3)
     registration_deadline = models.DateField()
-    coordinators = models.ManyToManyField('Coordinator')
+    coordinators = models.ManyToManyField(Coordinator)
     whatsapp_group_link = models.URLField(null=True, blank=True)
+    student_coordinators = models.ManyToManyField(StudentCoordinator, related_name='events', blank=True)
 
     def __str__(self):
         return self.title

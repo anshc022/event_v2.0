@@ -1,9 +1,8 @@
-# admin.py
 import csv
 import io
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Event, Coordinator, Registration
+from .models import Event, Coordinator, StudentCoordinator, Registration
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -128,4 +127,5 @@ class EventAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Coordinator)
+admin.site.register(StudentCoordinator)
 admin.site.register(Registration)
