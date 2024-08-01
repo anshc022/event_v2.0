@@ -222,8 +222,9 @@
                             <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
                         </div>
                         <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">close</i></span>
-                            <p class="dm-serif-display-regular">{{ event.description }}</p>
+                            <span class="card-title grey-text text-darken-1 dm-serif-display-light event-title">{{ event.title }}<i class="material-icons right">close</i></span>
+                            <p class="dm-serif-display-light grey-text text-darken-2">{{ event.description }}</p>
+                            
                             <p class="dm-serif-display-regular event-date">
                                 <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
                             </p>
