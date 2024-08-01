@@ -12,12 +12,8 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
-    DOMAIN_CHOICES = [
-        ('iot', 'IoT'),
-        ('full_stack', 'Full Stack'),
-        ('ai_ml', 'AI/ML'),
-    ]
-
+    DOMAIN_CHOICES = Registration.DOMAIN_CHOICES
+    
     domain = forms.ChoiceField(choices=DOMAIN_CHOICES, required=True, label='Domain')
 
     def __init__(self, *args, **kwargs):

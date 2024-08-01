@@ -151,11 +151,20 @@
                 {{ form.team_name }}
             </div>
 
+            <!-- Include domain dropdown -->
+            <div class="input-field">
+                <label for="id_domain" class="form-label">Domain:</label>
+                {{ form.domain }}
+            </div>
+
+            <!-- Render all visible fields -->
             {% for field in form.visible_fields %}
-                <div class="input-field">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                </div>
+                {% if field.name != 'team_name' and field.name != 'domain' %}
+                    <div class="input-field">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endif %}
             {% endfor %}
 
             <button type="submit" class="btn waves-effect waves-light">Register
@@ -178,10 +187,12 @@
         </div>
         {% endif %}
     </div>
+
     <footer class="bg-dark text-white text-center p-4">
         <p class="footer-text">Made with ♥ by Pranshu Chourasia VTU21413</p>
         <p class="footer-text">© Pranshu Chourasia</p>
     </footer>
+
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Dark Mode Toggle JavaScript -->
@@ -204,7 +215,7 @@
         // Initialize Materialize components
         document.addEventListener('DOMContentLoaded', function() {
             const elems = document.querySelectorAll('.sidenav');
-            const instances = M.Sidenav.init(elems);
+            M.Sidenav.init(elems);
 
             // Initialize modal
             const modalElems = document.querySelectorAll('.modal');
