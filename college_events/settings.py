@@ -1,23 +1,23 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 from django.core.exceptions import ImproperlyConfigured
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# Secret key for Django
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
+# Debug mode
+DEBUG = os.environ.get('DJANGO_DEBUG') == 'True'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
-
+# Allowed hosts
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 # Application definition
 
 INSTALLED_APPS = [
@@ -63,9 +63,10 @@ WSGI_APPLICATION = 'college_events.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Database configuration
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres:jaSSQiWQaGZKemRAslWxQeMeNrdHMFfR@monorail.proxy.rlwy.net:50709/railway'
+        default=os.environ.get('DATABASE_URL')
     )
 }
 
