@@ -1,0 +1,39 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h1>VTU Number Search</h1>
+  <form method="get" action="{% url 'admin:vtu-search' %}">
+    <label for="vtu_number">VTU Number:</label>
+    <input type="text" name="vtu_number" id="vtu_number" value="{{ vtu_number }}">
+    <input type="submit" value="Search">
+  </form>
+
+  {% if registrations %}
+    <h2>Search Results:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>Event</th>
+          <th>Member Name</th>
+          <th>VTU Number</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for registration in registrations %}
+          {% for member in registration.members %}
+            <tr>
+              <td>{{ registration.team_name }}</td>
+              <td>{{ registration.event.title }}</td>
+              <td>{{ member.name }}</td>
+              <td>{{ member.vtu_number }}</td>
+              <td>{{ member.year }}</td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif vtu_number %}
+    <p>No registrations found for VTU number "{{ vtu_number }}"</p>
+  {% endif %}
+{% endblock %}

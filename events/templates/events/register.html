@@ -15,8 +15,8 @@
     <style>
         body {
             font-family: 'DM Serif Display', serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-color, #f0f0f0);
+            color: var(--text-color, #333);
             transition: background-color 0.3s, color 0.3s;
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
             width: 80%;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--container-bg-color);
+            background-color: var(--container-bg-color, #fff);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             border-radius: 8px;
@@ -33,42 +33,42 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: var(--heading-color);
+            color: var(--heading-color, #333);
         }
         .form-label {
-            color: var(--label-color);
+            color: var(--label-color, #555);
         }
         .input-field input[type="text"]:focus + label,
         .input-field input[type="email"]:focus + label,
         .input-field input[type="password"]:focus + label {
-            color: var(--label-focus-color);
+            color: var(--label-focus-color, #000);
         }
         .input-field input[type="text"]:focus,
         .input-field input[type="email"]:focus,
         .input-field input[type="password"]:focus {
-            border-bottom: 1px solid var(--input-focus-border-color);
-            box-shadow: 0 1px 0 0 var(--input-focus-shadow-color);
+            border-bottom: 1px solid var(--input-focus-border-color, #000);
+            box-shadow: 0 1px 0 0 var(--input-focus-shadow-color, #000);
         }
         .btn {
-            background-color: var(--button-bg-color);
-            color: var(--button-text-color);
+            background-color: var(--button-bg-color, #007bff);
+            color: var(--button-text-color, #fff);
             border-radius: 8px;
         }
         .btn:hover {
-            background-color: var(--button-hover-bg-color);
+            background-color: var(--button-hover-bg-color, #0056b3);
         }
         .material-icons {
-            color: var(--icon-color);
+            color: var(--icon-color, #000);
         }
         .nav-wrapper {
-            background-color: var(--nav-bg-color);
+            background-color: var(--nav-bg-color, #6d2515);
             padding-left: 20px;
             padding-right: 20px;
         }
         .brand-logo {
             font-size: 2rem;
             font-weight: bold;
-            color: var(--nav-text-color);
+            color: var(--nav-text-color, #fff);
         }
         .nav-links {
             margin-left: auto;
@@ -77,7 +77,7 @@
             margin-left: 1rem;
         }
         .nav-links a {
-            color: var(--nav-text-color);
+            color: var(--nav-text-color, #fff);
         }
         .nav-links a:hover {
             text-decoration: underline;
@@ -99,47 +99,47 @@
             --nav-bg-color: #2d3748;
             --nav-text-color: #cbd5e0;
         }
+        .messages {
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
         footer {
             background-color: #212121;
             color: white;
             padding: 20px 0;
             text-align: center;
         }
-
         footer .footer-text {
             margin: 0;
             font-size: 1rem;
         }
-
-        /* Modal smooth transitions */
-        .modal {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .modal.open {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .modal.close {
-            opacity: 0;
-            transform: scale(0.9);
-        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body>
     <!-- Navigation bar -->
     <nav>
         <div class="nav-wrapper">
-            <a href="{% url 'home' %}" class="brand-logo dm-serif-display-regular">College Events</a>
+            <a href="{% url 'home' %}" class="brand-logo">College Events</a>
             <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down nav-links">
-                <li><a href="{% url 'home' %}" class="dm-serif-display-regular">Home</a></li>
-                <li><a href="#" class="dm-serif-display-regular">About</a></li>
-                <li><a href="#" class="dm-serif-display-regular">Events</a></li>
-                <li><a href="#" class="dm-serif-display-regular">Contact</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Contact</a></li>
                 <li>
-                    <label for="dark-mode-switch" class="dm-serif-display-regular">Dark Mode</label>
+                    <label for="dark-mode-switch">Dark Mode</label>
                     <input type="checkbox" id="dark-mode-switch">
                     <i class="material-icons">brightness_4</i>
                 </li>
@@ -149,14 +149,24 @@
 
     <!-- Mobile Navigation (SideNav) -->
     <ul class="sidenav" id="mobile-nav">
-        <li><a href="{% url 'home' %}" class="dm-serif-display-regular">Home</a></li>
-        <li><a href="#" class="dm-serif-display-regular">About</a></li>
-        <li><a href="#" class="dm-serif-display-regular">Events</a></li>
-        <li><a href="#" class="dm-serif-display-regular">Contact</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Contact</a></li>
     </ul>
 
     <div class="container">
-        <h1 class="dm-serif-display-regular">Registration for {{ event.title }}</h1>
+        <h1>Registration for {{ event.title }}</h1>
+
+        <!-- Error and Success Messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <form method="post" class="col s12">
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -180,21 +190,21 @@
 
         <!-- WhatsApp Group Link Section -->
         {% if registration_complete %}
-        <div id="popup" class="modal">
-            <div class="modal-content">
-                <h4>Congratulations!</h4>
-                <p>Your registration for {{ event.title }} is successful.</p>
-                <p>Join our WhatsApp group for further updates:</p>
-                <a href="{{ event.whatsapp_group_link }}" class="btn waves-effect waves-light" target="_blank">Join WhatsApp Group</a>
+            <div id="popup" class="modal">
+                <div class="modal-content">
+                    <h4>Congratulations!</h4>
+                    <p>Your registration for {{ event.title }} is successful.</p>
+                    <p>Join our WhatsApp group for further updates:</p>
+                    <a href="{{ event.whatsapp_group_link }}" class="btn waves-effect waves-light" target="_blank">Join WhatsApp Group</a>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
             </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-            </div>
-        </div>
         {% endif %}
     </div>
 
-    <footer class="bg-dark text-white text-center p-4">
+    <footer>
         <p class="footer-text">Made with ♥ by Pranshu Chourasia VTU21413</p>
         <p class="footer-text">© Pranshu Chourasia</p>
     </footer>
@@ -203,50 +213,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Dark Mode Toggle JavaScript -->
     <script>
-        // Dark Mode Toggle JavaScript
-        const darkModeSwitch = document.querySelector('#dark-mode-switch');
-        darkModeSwitch.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Materialize components
+            M.Sidenav.init(document.querySelectorAll('.sidenav'));
+            M.Modal.init(document.querySelectorAll('.modal'), { dismissible: false });
 
-        // Check for previously set dark mode preference
-        document.addEventListener('DOMContentLoaded', () => {
-            const darkModeEnabled = JSON.parse(localStorage.getItem('darkMode')) || false;
-            if (darkModeEnabled) {
+            // Open the modal on page load if registration_complete is true
+            if ("{{ registration_complete|lower }}" === "true") {
+                M.Modal.getInstance(document.getElementById('popup')).open();
+            }
+
+            // Dark Mode Toggle
+            const darkModeSwitch = document.querySelector('#dark-mode-switch');
+            darkModeSwitch.addEventListener('change', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            // Check for previously set dark mode preference
+            if (JSON.parse(localStorage.getItem('darkMode')) || false) {
                 document.body.classList.add('dark-mode');
                 darkModeSwitch.checked = true;
             }
-        });
-
-        // Initialize Materialize components
-        document.addEventListener('DOMContentLoaded', function() {
-            const elems = document.querySelectorAll('.sidenav');
-            M.Sidenav.init(elems);
-
-            // Initialize modal
-            const modalElems = document.querySelectorAll('.modal');
-            const modalInstances = M.Modal.init(modalElems, { dismissible: false });
-
-            // Open the modal on page load if registration_complete is true
-            const registrationComplete = {{ registration_complete|lower }};
-            if (registrationComplete) {
-                const popup = document.getElementById('popup');
-                const modalInstance = M.Modal.getInstance(popup);
-                modalInstance.open();
-            }
-
-            // Prevent multiple form submissions
-            const form = document.querySelector('form');
-            const submitButton = form.querySelector('button[type="submit"]');
-            form.addEventListener('submit', (event) => {
-                if (submitButton.disabled) {
-                    event.preventDefault();
-                    return;
-                }
-                submitButton.disabled = true;
-                submitButton.textContent = 'Submitting...';
-            });
         });
     </script>
 </body>
