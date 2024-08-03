@@ -1,6 +1,6 @@
 from django import forms
-from .models import Registration, Event
 from django.core.exceptions import ValidationError
+from .models import Registration, Event
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -35,9 +35,14 @@ class RegistrationForm(forms.ModelForm):
         if team_size > 0:
             self.fields['member1_email'] = forms.EmailField(label='Member 1 Email ID')
 
+    def clean_member1_email(self):
+        email = self.cleaned_data.get('member1_email')
+        if email and not email.endswith('@veltech.edu.in'):
+            raise ValidationError('Email must be from the @veltech.edu.in domain.')
+        return email
+
     def clean(self):
         cleaned_data = super().clean()
-        email = cleaned_data.get('member1_email')
         domain = cleaned_data.get('domain')
 
         # No specific domain validation for the email as "domain" refers to event theme
