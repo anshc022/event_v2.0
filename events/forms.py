@@ -35,12 +35,20 @@ class RegistrationForm(forms.ModelForm):
         if team_size > 0:
             self.fields['member1_email'] = forms.EmailField(label='Member 1 Email ID')
 
+    def clean_member1_email(self):
+        email = self.cleaned_data.get('member1_email')
+
+        if email and not email.endswith('@veltech.edu.in'):
+            raise ValidationError('Only @veltech.edu.in email addresses are allowed.')
+        
+        return email
+
     def clean(self):
         cleaned_data = super().clean()
         email = cleaned_data.get('member1_email')
-        domain = cleaned_data.get('domain')
 
-        # No specific domain validation for the email as "domain" refers to event theme
+        # Call clean_member1_email to validate the email
+        self.clean_member1_email()
 
         return cleaned_data
 

@@ -180,6 +180,9 @@
                 <div class="input-field">
                     <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                     {{ field }}
+                    {% if field.errors %}
+                        <span class="helper-text" data-error="{{ field.errors|join:', ' }}"></span>
+                    {% endif %}
                 </div>
             {% endfor %}
 

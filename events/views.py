@@ -78,7 +78,10 @@ def register(request, event_id):
                 'registration_complete': True,
                 'whatsapp_group_link': event.whatsapp_group_link,
             })
-        
+        else:
+            # If the form is not valid, the errors will be in form.errors
+            messages.error(request, "Only @veltech.edu.in email addresses are allowed")
+    
     else:
         form = RegistrationForm(team_size=event.team_size)
     
