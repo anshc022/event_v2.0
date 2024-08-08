@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib import messages
-from .models import Event, Registration, Feedback
+from .models import Event, Registration
 from .forms import RegistrationForm
 import csv
 from icalendar import Calendar, Event as CalendarEvent
 from django.utils.timezone import localtime, make_aware
 import datetime
-from .forms import FeedbackForm
 
 def home(request):
     today = datetime.date.today()
@@ -140,32 +139,3 @@ def add_to_calendar(request, event_id):
     response = HttpResponse(cal.to_ical(), content_type='text/calendar')
     response['Content-Disposition'] = f'attachment; filename="event_{event.id}.ics"'
     return response
-
-def feedback(request):
-    vtu_number = request.GET.get('vtu_number')
-
-    if vtu_number:
-        # Fetch the registration details based on the VTU number
-        try:
-            registration = get_object_or_404(Registration, members__contains=[{'vtu_number': vtu_number}])
-        except Registration.DoesNotExist:
-            return HttpResponseForbidden("Invalid VTU number.")
-        
-        # Check if feedback has already been submitted for this registration
-        if Feedback.objects.filter(registration=registration).exists():
-            return HttpResponseForbidden("Feedback has already been submitted for this registration.")
-
-        if request.method == 'POST':
-            form = FeedbackForm(request.POST)
-            if form.is_valid():
-                feedback = form.save(commit=False)
-                feedback.registration = registration
-                feedback.save()
-                messages.success(request, "Feedback submitted successfully!")
-                return redirect('home')  # Redirect to home or another page after submission
-        else:
-            form = FeedbackForm()
-        
-        return render(request, 'events/feedback.html', {'form': form, 'vtu_number': vtu_number, 'registration': registration})
-    
-    return render(request, 'events/feedback.html')
