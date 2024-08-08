@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback for {{ event.title }}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Adjust as needed -->
+</head>
+<body>
+    <header>
+        <h1>Feedback for {{ event.title }}</h1>
+    </header>
+    
+    <main>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.vtu_number.id_for_label }}">{{ form.vtu_number.label }}</label>
+                {{ form.vtu_number }}
+            </div>
+            <div>
+                <label>{{ form.q1.label }}</label>
+                {{ form.q1 }}
+            </div>
+            <div>
+                <label>{{ form.q2.label }}</label>
+                {{ form.q2 }}
+            </div>
+            <div>
+                <label>{{ form.q3.label }}</label>
+                {{ form.q3 }}
+            </div>
+            <div>
+                <label>{{ form.q4.label }}</label>
+                {{ form.q4 }}
+            </div>
+            <div>
+                <label>{{ form.q5.label }}</label>
+                {{ form.q5 }}
+            </div>
+            <div>
+                <label>{{ form.q6.label }}</label>
+                {{ form.q6 }}
+            </div>
+            <div>
+                <label>{{ form.q7.label }}</label>
+                {{ form.q7 }}
+            </div>
+            <div>
+                <label>{{ form.q8.label }}</label>
+                {{ form.q8 }}
+            </div>
+            <div>
+                <label for="{{ form.comments.id_for_label }}">{{ form.comments.label }}</label>
+                {{ form.comments }}
+            </div>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Your Company</p>
+    </footer>
+</body>
+</html>
