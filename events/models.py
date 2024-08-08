@@ -56,20 +56,17 @@ class Registration(models.Model):
     def __str__(self):
         return self.team_name
 
-# models.py
-from django.db import models
-
 class Feedback(models.Model):
     registration = models.OneToOneField(Registration, on_delete=models.CASCADE)
-    overall_organization = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    content_relevance = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    time_venue_satisfaction = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    event_interest = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    expectations_met = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    opinion_speakers = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    usefulness = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    overall_effectiveness = models.CharField(max_length=20, choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')])
-    additional_comments = models.TextField(blank=True, null=True)
+    overall_organization = models.CharField(max_length=20)
+    relevance_of_content = models.CharField(max_length=20, default='Not Provided')
+    satisfaction_with_time_venue = models.CharField(max_length=20, default='Not Provided')
+    interest_level = models.CharField(max_length=20, default='Not Provided')
+    expectations_met = models.CharField(max_length=20)
+    opinion_on_speakers = models.CharField(max_length=20, default='Not Provided')
+    usefulness = models.CharField(max_length=20)
+    overall_effectiveness = models.CharField(max_length=20)
+    additional_comments = models.TextField(blank=True, default='No comments')
 
     def __str__(self):
         return f"Feedback for {self.registration.team_name}"
