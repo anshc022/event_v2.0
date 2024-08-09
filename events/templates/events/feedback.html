@@ -50,9 +50,7 @@
             </div>
         </div>
 
-        {% if not feedback_enabled %}
-            <p class="text-yellow-400">Feedback for this event is currently disabled.</p>
-        {% elif feedback_submitted %}
+        {% if feedback_submitted %}
             <p class="text-green-400">Thank you for your feedback!</p>
         {% elif registration %}
             <p class="mb-4"><strong>Team Name:</strong> {{ registration.team_name }}</p>
