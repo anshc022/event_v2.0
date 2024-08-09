@@ -36,7 +36,7 @@ class Event(models.Model):
     coordinators = models.ManyToManyField(Coordinator)
     whatsapp_group_link = models.URLField(null=True, blank=True)
     student_coordinators = models.ManyToManyField(StudentCoordinator, related_name='events', blank=True)
-    feedback_enabled = models.BooleanField(default=False)  # New field to enable/disable feedback
+    feedback_enabled = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 
