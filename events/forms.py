@@ -1,6 +1,7 @@
 from django import forms
 from .models import Registration, Event
 from django.core.exceptions import ValidationError
+from .models import Feedback
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -55,3 +56,32 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = Registration
         fields = ['team_name', 'domain', 'member1_email']  # Include team_name, domain, and member1_email fields here
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['organization', 'content', 'satisfaction', 'interest', 'expectations', 'speakers', 'usefulness', 'effectiveness', 'additional_comments']
+
+        labels = {
+            'organization': 'How was the overall organization of the event?',
+            'content': 'How relevant was the content presented during the event?',
+            'satisfaction': 'Are you satisfied with the time and venue?',
+            'interest': 'How interesting was the event for you?',
+            'expectations': 'Did the event meet your expectations?',
+            'speakers': 'What is your opinion about the speakers/presenters?',
+            'usefulness': 'How useful was the event from a knowledge and information perspective?',
+            'effectiveness': 'Overall effectiveness of the event',
+            'additional_comments': 'Additional comments and suggestions for future events',
+        }
+
+        widgets = {
+            'organization': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'content': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'satisfaction': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'interest': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'expectations': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'speakers': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'usefulness': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'effectiveness': forms.RadioSelect(choices=[('Excellent', 'Excellent'), ('Very Good', 'Very Good'), ('Good', 'Good'), ('Average', 'Average')]),
+            'additional_comments': forms.Textarea(attrs={'rows': 3}),
+        }

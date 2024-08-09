@@ -2,7 +2,7 @@ import csv
 import io
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Event, Coordinator, StudentCoordinator, Registration
+from .models import Event, Coordinator, StudentCoordinator, Registration, Feedback
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -23,12 +23,25 @@ class RegistrationInline(admin.TabularInline):
     members_display.short_description = 'Members'
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'registration_deadline', 'whatsapp_group_link', 'registered_teams_count')
+    list_display = ('title', 'location', 'registration_deadline', 'whatsapp_group_link', 'registered_teams_count', 'feedback_enabled')
     search_fields = ('title', 'location')
     prepopulated_fields = {'event_link': ('title',)}
     inlines = [RegistrationInline]
+    list_editable = ['feedback_enabled']
 
-    actions = ['download_registrations_csv', 'download_registrations_pdf']
+    actions = ['enable_feedback', 'disable_feedback', 'download_registrations_csv', 'download_registrations_pdf']
+
+    def enable_feedback(self, request, queryset):
+        queryset.update(feedback_enabled=True)
+        self.message_user(request, "Feedback has been enabled for the selected events.")
+
+    enable_feedback.short_description = "Enable Feedback for selected Events"
+
+    def disable_feedback(self, request, queryset):
+        queryset.update(feedback_enabled=False)
+        self.message_user(request, "Feedback has been disabled for the selected events.")
+
+    disable_feedback.short_description = "Disable Feedback for selected Events"
 
     def download_registrations_csv(self, request, queryset):
         response = HttpResponse(content_type='text/csv')
@@ -129,3 +142,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Coordinator)
 admin.site.register(StudentCoordinator)
 admin.site.register(Registration)
+admin.site.register(Feedback)

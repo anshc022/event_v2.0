@@ -7,6 +7,7 @@ import csv
 from icalendar import Calendar, Event as CalendarEvent
 from django.utils.timezone import localtime, make_aware
 import datetime
+from .forms import FeedbackForm
 
 def home(request):
     today = datetime.date.today()
@@ -139,3 +140,37 @@ def add_to_calendar(request, event_id):
     response = HttpResponse(cal.to_ical(), content_type='text/calendar')
     response['Content-Disposition'] = f'attachment; filename="event_{event.id}.ics"'
     return response
+def feedback(request):
+    vtu_number = request.GET.get('vtu_number', None)
+    registration = None
+    feedback_submitted = False
+
+    if vtu_number:
+        # Search for the VTU number in the members of registrations
+        registration = Registration.objects.filter(members__contains=[{'vtu_number': vtu_number}]).first()
+
+        if registration:
+            if request.method == 'POST':
+                form = FeedbackForm(request.POST)
+                if form.is_valid():
+                    feedback = form.save(commit=False)  # Don't commit to the database yet
+                    feedback.registration = registration  # Associate the feedback with the registration
+                    feedback.save()  # Now save it to the database
+                    feedback_submitted = True
+                    messages.success(request, "Thank you for your feedback!")
+                else:
+                    messages.error(request, "Please correct the errors below.")
+            else:
+                form = FeedbackForm()
+        else:
+            form = None
+            messages.error(request, "No registration found for the provided VTU number.")
+    else:
+        form = None
+
+    return render(request, 'events/feedback.html', {
+        'registration': registration,
+        'form': form,
+        'vtu_number': vtu_number,
+        'feedback_submitted': feedback_submitted,
+    })
