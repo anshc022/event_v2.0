@@ -1,16 +1,15 @@
 from pathlib import Path
 import os
-from decouple import config
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret key for Django
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = "django-insecure-u3-9)lv8%-t##b02zablpsqk=_!t8js)k0mfzh^1r)i^i0*+ul"
 
 # Debug mode
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True  # or False depending on your environment
 
 # Allowed hosts
 ALLOWED_HOSTS = [".vercel.app", "localhost", "127.0.0.1", ".now.sh"]
@@ -59,7 +58,7 @@ WSGI_APPLICATION = 'college_events.wsgi.application'
 # Database configuration
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default='postgresql://postgres:jaSSQiWQaGZKemRAslWxQeMeNrdHMFfR@monorail.proxy.rlwy.net:50709/railway'
     )
 }
 
