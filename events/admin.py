@@ -2,7 +2,7 @@ import csv
 import io
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Event, Coordinator, StudentCoordinator, Registration, Feedback
+from .models import Event, Coordinator, StudentCoordinator, Registration
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -124,10 +124,8 @@ class EventAdmin(admin.ModelAdmin):
             extra_context['event_date'] = obj.event_date
             extra_context['event_time'] = obj.event_time
         return super().change_view(request, object_id, form_url=form_url, extra_context=extra_context)
-    
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Coordinator)
 admin.site.register(StudentCoordinator)
 admin.site.register(Registration)
-admin.site.register(Feedback)

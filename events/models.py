@@ -36,7 +36,7 @@ class Event(models.Model):
     coordinators = models.ManyToManyField(Coordinator)
     whatsapp_group_link = models.URLField(null=True, blank=True)
     student_coordinators = models.ManyToManyField(StudentCoordinator, related_name='events', blank=True)
-    feedback_enabled = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
 
@@ -55,18 +55,3 @@ class Registration(models.Model):
 
     def __str__(self):
         return self.team_name
-
-class Feedback(models.Model):
-    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
-    organization = models.CharField(max_length=20)
-    content = models.CharField(max_length=20)
-    satisfaction = models.CharField(max_length=20)
-    interest = models.CharField(max_length=20)
-    expectations = models.CharField(max_length=20)
-    speakers = models.CharField(max_length=20)
-    usefulness = models.CharField(max_length=20)
-    effectiveness = models.CharField(max_length=20)
-    additional_comments = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Feedback for {self.registration.team_name}"

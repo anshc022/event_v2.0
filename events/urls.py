@@ -9,5 +9,5 @@ urlpatterns = [
     path('register/<int:event_id>/', views.register, name='register'),
     path('event/<int:pk>/download-registrations/', views.download_registrations_details, name='event_download_registrations_details'),
     path('event/<int:event_id>/add-to-calendar/', views.add_to_calendar, name='add_to_calendar'),
-    path('feedback/', views.feedback, name='feedback'),
+    # Add other paths as needed
 ]+  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
