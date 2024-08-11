@@ -407,6 +407,9 @@
     <footer class="bg-dark text-white text-center p-4">
         <p class="footer-text">Made with ♥ by Pranshu Chourasia VTU21413</p>
         <p class="footer-text">© Pranshu Chourasia</p>
+        {% if event.customform_set.exists %}
+    <a href="{% url 'custom_form' event.customform_set.first.id %}" class="btn btn-primary">Fill Custom Form</a>
+{% endif %}
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -1,0 +1,23 @@
+<!-- templates/events/custom_form.html -->
+<h2>{{ custom_form.title }} - {{ event.title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="vtu_number">Enter your VTU Number:</label>
+    <input type="text" name="vtu_number" required><br><br>
+
+    {% for question in custom_form.questions.all %}
+        <fieldset>
+            <legend>{{ question.question_text }}</legend>
+            {% for choice in question.choices.all %}
+                <label>
+                    <input type="radio" name="{{ question.id }}" value="{{ choice.choice_text }}" required>
+                    {{ choice.choice_text }}
+                </label><br>
+            {% endfor %}
+        </fieldset>
+        <br>
+    {% endfor %}
+
+    <button type="submit">Submit</button>
+</form>

@@ -45,7 +45,7 @@ class Event(models.Model):
 
     def registration_deadline_passed(self):
         return not self.registration_open()
-    
+
 class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100)
