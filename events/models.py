@@ -55,3 +55,4 @@ class Registration(models.Model):
 
     def __str__(self):
         return self.team_name
+    
