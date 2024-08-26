@@ -177,48 +177,49 @@
     </div>
 
     <div class="container blur">
-        <h1 id="event-detail" class="white-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}</h1>
+        <h1 id="upcoming" class="white-text text-darken-4 dm-serif-display-regular event-title">Upcoming Events</h1>
         <div class="row">
-            <div class="col s12 m6 l4">
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="{{ event.banner_image }}" alt="{{ event.title }}">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">more_vert</i></span>
-                        <p class="dm-serif-display-regular">{{ event.description }}</p>
-                        <p class="dm-serif-display-regular event-date">
-                            <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
-                        </p>
-                        <p class="dm-serif-display-regular registration-deadline">
-                            <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
-                        </p>
-                        <!-- Status Label -->
-                        <span class="status-label {% if is_registration_open %}status-open{% else %}status-closed{% endif %}">
-                            {% if is_registration_open %}Registration Open{% else %}Registration Closed{% endif %}
-                        </span>
-                    </div>
-                    <div class="card-action">
-                        <a href="{% url 'register' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">
-                            {% if is_registration_open %}Register Now{% else %}Registration Closed{% endif %}
-                        </a>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">close</i></span>
-                        <p class="dm-serif-display-regular">{{ event.description }}</p>
-                        <p class="dm-serif-display-regular event-date">
-                            <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
-                        </p>
-                        <p class="dm-serif-display-regular registration-deadline">
-                            <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
-                        </p>
-                        <!-- Status Label -->
-                        <span class="status-label {% if is_registration_open %}status-open{% else %}status-closed{% endif %}">
-                            {% if is_registration_open %}Registration Open{% else %}Registration Closed{% endif %}
-                        </span>
+            <!-- Loop through upcoming events -->
+            {% for event in upcoming_events %}
+                <div class="col s12 m6 l4">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="{{ event.banner_image }}" alt="{{ event.title }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">more_vert</i></span>
+                            <p class="dm-serif-display-regular">{{ event.description|truncatewords:30 }}</p>
+                            <p class="dm-serif-display-regular event-date">
+                                <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
+                            </p>
+                            <p class="dm-serif-display-regular registration-deadline">
+                                <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
+                            </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
+                        </div>
+                        <div class="card-action">
+                            <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">close</i></span>
+                            <p class="dm-serif-display-regular">{{ event.description }}</p>
+                            <p class="dm-serif-display-regular event-date">
+                                <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
+                            </p>
+                            <p class="dm-serif-display-regular registration-deadline">
+                                <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
+                            </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
 
         <h1 id="past" class="white-text text-darken-4 dm-serif-display-regular event-title">Past Events</h1>
