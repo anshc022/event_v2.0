@@ -22,16 +22,17 @@
             padding: 0;
         }
 
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(52, 20, 20, 0.3); /* Semi-transparent background */
-            backdrop-filter: blur(10px); /* Blurring effect */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
-            margin-top: 20px;
-            border-radius: 12px; /* Slightly rounded corners */
-        }
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background: rgba(108, 19, 126, 0.18); /* Semi-transparent background */
+        backdrop-filter: blur(10px); /* Blurring effect */
+        box-shadow: 0 0 15px rgba(143, 7, 134, 0.2), 0 0 30px rgba(108, 19, 126, 0.6); /* Added glow effect */
+        margin-top: 20px;
+        border-radius: 12px; /* Slightly rounded corners */
+    }
+
 
         h1 {
             font-size: 2.5rem;
@@ -356,7 +357,7 @@ body.dark-mode {
             {% csrf_token %}
             {{ form.non_field_errors }}
         
-            {% for field in form.visible_fields %}
+            {% for field in form %}
                 <div class="input-field">
                     <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                     {{ field }}
@@ -370,7 +371,7 @@ body.dark-mode {
                 <i class="material-icons right">send</i>
             </button>
         </form>
-
+    
         <!-- WhatsApp Group Link Section -->
         {% if registration_complete %}
         <div id="popup" class="modal">
