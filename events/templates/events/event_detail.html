@@ -8,6 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
         body {
             font-family: 'Exo', sans-serif;
             margin: 0;
@@ -48,9 +54,11 @@
             list-style: none;
             width: 20px;
             height: 20px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(244, 244, 244, 0.3);
             animation: animate 25s linear infinite;
             bottom: -150px;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(25, 30, 134, 0.6);
         }
 
         .circles li:nth-child(1) {
@@ -58,6 +66,7 @@
             width: 80px;
             height: 80px;
             animation-delay: 0s;
+            box-shadow: 0 0 30px rgba(12, 26, 86, 0.6);
         }
 
         .circles li:nth-child(2) {
@@ -66,6 +75,7 @@
             height: 20px;
             animation-delay: 2s;
             animation-duration: 12s;
+            box-shadow: 0 0 15px rgba(89, 40, 194, 0.6);
         }
 
         .circles li:nth-child(3) {
@@ -73,6 +83,7 @@
             width: 20px;
             height: 20px;
             animation-delay: 4s;
+            box-shadow: 0 0 15px rgba(0, 8, 255, 0.6);
         }
 
         .circles li:nth-child(4) {
@@ -81,6 +92,7 @@
             height: 60px;
             animation-delay: 0s;
             animation-duration: 18s;
+            box-shadow: 0 0 25px rgba(30, 0, 255, 0.6);
         }
 
         .circles li:nth-child(5) {
@@ -88,6 +100,7 @@
             width: 20px;
             height: 20px;
             animation-delay: 0s;
+            box-shadow: 0 0 15px rgba(0, 21, 255, 0.6);
         }
 
         .circles li:nth-child(6) {
@@ -95,6 +108,7 @@
             width: 110px;
             height: 110px;
             animation-delay: 3s;
+            box-shadow: 0 0 30px rgba(230, 0, 255, 0.6);
         }
 
         .circles li:nth-child(7) {
@@ -102,6 +116,7 @@
             width: 150px;
             height: 150px;
             animation-delay: 7s;
+            box-shadow: 0 0 40px rgba(212, 0, 255, 0.6);
         }
 
         .circles li:nth-child(8) {
@@ -110,6 +125,7 @@
             height: 25px;
             animation-delay: 15s;
             animation-duration: 45s;
+            box-shadow: 0 0 15px rgba(200, 0, 255, 0.6);
         }
 
         .circles li:nth-child(9) {
@@ -118,6 +134,7 @@
             height: 15px;
             animation-delay: 2s;
             animation-duration: 35s;
+            box-shadow: 0 0 15px rgba(255, 0, 111, 0.6);
         }
 
         .circles li:nth-child(10) {
@@ -126,6 +143,7 @@
             height: 150px;
             animation-delay: 0s;
             animation-duration: 11s;
+            box-shadow: 0 0 40px rgba(255, 0, 55, 0.6);
         }
 
         @keyframes animate {
@@ -142,21 +160,22 @@
         }
 
         .tile {
-            background-color: #1e1e1e; /* Dark background for tiles */
-            color: #e0e0e0; /* Light text color */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+            background-color: rgba(30, 30, 30, 0.7);
+            color: #e0e0e0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 123, 255, 0.5);
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .section-title {
-            border-bottom: 2px solid #333; /* Darker border for sections */
+            border-bottom: 2px solid #333;
             padding-bottom: 5px;
             position: -webkit-sticky;
             position: sticky;
             top: 0;
-            background-color: #1e1e1e; /* Dark background */
+            background-color: #1e1e1e;
             z-index: 10;
             margin: 0;
             padding-top: 10px;
@@ -164,7 +183,7 @@
 
         .section-title h2 {
             margin: 0;
-            color: #e0e0e0; /* Light text color */
+            color: #e0e0e0;
         }
 
         .loading-overlay {
@@ -173,7 +192,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            background-color: rgba(0, 0, 0, 0.9);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -183,7 +202,7 @@
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #3498db; /* Spinner color */
+            border-top: 4px solid #3498db;
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
@@ -199,8 +218,8 @@
         }
 
         footer {
-            background-color: #1e1e1e; /* Dark footer background */
-            color: #e0e0e0; /* Light text color */
+            background-color: #1e1e1e;
+            color: #e0e0e0;
             padding: 20px 0;
             text-align: center;
         }
@@ -212,7 +231,7 @@
 
         .whatsapp-button {
             display: inline-block;
-            background-color: #25D366; /* WhatsApp green color */
+            background-color: #25D366;
             color: white;
             padding: 8px 12px;
             border-radius: 4px;
@@ -223,89 +242,10 @@
         }
 
         .whatsapp-button:hover {
-            background-color: #1ebe57; /* Darker shade for hover effect */
-        }
-
-        .bg-blue-800 {
-            background-color: #1e1e1e; /* Darker blue background */
-        }
-
-        .bg-blue-500 {
-            background-color: #3498db; /* Brighter blue */
-        }
-
-        .bg-blue-600 {
-            background-color: #2980b9; /* Darker blue */
-        }
-
-        .bg-green-500 {
-            background-color: #2ecc71; /* Bright green */
-        }
-
-        .bg-green-600 {
-            background-color: #27ae60; /* Darker green */
-        }
-
-        .text-white {
-            color: #e0e0e0; /* Light text color */
-        }
-
-        .text-gray-300 {
-            color: #b0b0b0; /* Light gray text color */
-        }
-
-        .text-gray-600 {
-            color: #8c8c8c; /* Gray text color */
-        }
-
-        .bg-gray-300 {
-            background-color: #2c2c2c; /* Dark gray background */
-        }
-
-        .bg-gray-400 {
-            background-color: #3a3a3a; /* Darker gray background */
-        }
-
-        .text-red-500 {
-            color: #e74c3c; /* Red text color */
-        }
-
-        .text-green-500 {
-            color: #2ecc71; /* Green text color */
-        }
-
-        .text-yellow-500 {
-            color: #f1c40f; /* Yellow text color */
-        }
-
-        .text-orange-500 {
-            color: #e67e22; /* Orange text color */
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1e1e1e; /* Dark background for bottom nav */
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 0;
-            box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .bottom-nav a {
-            color: #e0e0e0; /* Light text color */
-            font-size: 24px;
-            transition: color 0.3s ease;
-        }
-
-        .bottom-nav a:hover {
-            color: #3498db; /* Change color on hover */
+            background-color: #1ebe57;
         }
     </style>
-</head>>
+</head>
 
 <body>
     <!-- Loading overlay -->
