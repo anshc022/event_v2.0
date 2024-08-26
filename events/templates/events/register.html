@@ -162,12 +162,7 @@
         <form method="post" class="col s12">
             {% csrf_token %}
             {{ form.non_field_errors }}
-
-            <div class="input-field">
-                <label for="id_team_name" class="form-label">Team Name:</label>
-                {{ form.team_name }}
-            </div>
-
+        
             {% for field in form.visible_fields %}
                 <div class="input-field">
                     <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
@@ -177,11 +172,12 @@
                     {% endif %}
                 </div>
             {% endfor %}
-
+        
             <button type="submit" class="btn waves-effect waves-light">Register
                 <i class="material-icons right">send</i>
             </button>
         </form>
+        
 
         <!-- WhatsApp Group Link Section -->
         {% if registration_complete %}
