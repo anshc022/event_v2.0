@@ -1,0 +1,33 @@
+<!-- fill_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill Form for {{ event.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Fill Form for {{ event.title }}</h1>
+        
+        {% if vtu_form %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ vtu_form.as_p }}
+            <button type="submit" class="btn btn-success">Validate VTU Number</button>
+        </form>
+        {% endif %}
+
+        {% if dynamic_form %}
+        <form method="POST" action="{% url 'submit_form' event.id %}">
+            {% csrf_token %}
+            {{ dynamic_form.as_p }}
+            <input type="hidden" name="vtu_number" value="{{ vtu_number }}">
+            <button type="submit" class="btn btn-success">Submit Responses</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>
