@@ -50,8 +50,8 @@ class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100)
     members = models.JSONField(default=list)
-    domain = models.CharField(max_length=100, default='Not Specified')
     member1_email = models.EmailField(blank=True, null=True, default='no-reply@example.com')
+    member1_mobile_number = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):
         return self.team_name

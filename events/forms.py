@@ -12,13 +12,6 @@ class EventForm(forms.ModelForm):
         }
 
 class RegistrationForm(forms.ModelForm):
-    domain = forms.CharField(
-        max_length=100, 
-        required=True, 
-        label='Domain (e.g., IoT, Full Stack, AI/ML)', 
-        help_text='Specify the domain for your registration (e.g., IoT, Full Stack, AI/ML)'
-    )
-
     def __init__(self, *args, **kwargs):
         team_size = kwargs.pop('team_size', 3)  # Default to 3 if not provided
         super().__init__(*args, **kwargs)
@@ -27,7 +20,16 @@ class RegistrationForm(forms.ModelForm):
 
         # Add fields for each team member
         for i in range(1, team_size + 1):
-            self.fields[f'member{i}_name'] = forms.CharField(max_length=100, label=f'Member {i} Name')
+            member_label = f'Member {i} Name'
+            if i == 1:
+                member_label += ' (Team Leader)'
+                self.fields['member1_mobile_number'] = forms.CharField(
+                    max_length=15,
+                    label='Member 1 Mobile Number',
+                    required=True
+                )
+
+            self.fields[f'member{i}_name'] = forms.CharField(max_length=100, label=member_label)
             self.fields[f'member{i}_vtu_number'] = forms.CharField(max_length=20, label=f'Member {i} VTU Number')
             self.fields[f'member{i}_year'] = forms.IntegerField(label=f'Member {i} Year')
 
@@ -40,7 +42,7 @@ class RegistrationForm(forms.ModelForm):
 
         if email and not email.endswith('@veltech.edu.in'):
             raise ValidationError('Only @veltech.edu.in email addresses are allowed.')
-        
+
         return email
 
     def clean(self):
@@ -54,4 +56,4 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Registration
-        fields = ['team_name', 'domain', 'member1_email']  # Include team_name, domain, and member1_email fields here
+        fields = ['team_name', 'member1_email', 'member1_mobile_number']  # Updated to use 'member1_mobile_number'

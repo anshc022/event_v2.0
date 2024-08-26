@@ -35,17 +35,13 @@
             margin-bottom: 20px;
             color: var(--heading-color, #333);
         }
-        .form-label {
+        .input-field label {
             color: var(--label-color, #555);
         }
-        .input-field input[type="text"]:focus + label,
-        .input-field input[type="email"]:focus + label,
-        .input-field input[type="password"]:focus + label {
+        .input-field input:focus + label {
             color: var(--label-focus-color, #000);
         }
-        .input-field input[type="text"]:focus,
-        .input-field input[type="email"]:focus,
-        .input-field input[type="password"]:focus {
+        .input-field input:focus {
             border-bottom: 1px solid var(--input-focus-border-color, #000);
             box-shadow: 0 1px 0 0 var(--input-focus-shadow-color, #000);
         }
@@ -56,9 +52,6 @@
         }
         .btn:hover {
             background-color: var(--button-hover-bg-color, #0056b3);
-        }
-        .material-icons {
-            color: var(--icon-color, #000);
         }
         .nav-wrapper {
             background-color: var(--nav-bg-color, #6d2515);
@@ -95,7 +88,6 @@
             --button-bg-color: #4a5568;
             --button-text-color: #cbd5e0;
             --button-hover-bg-color: #2d3748;
-            --icon-color: #cbd5e0;
             --nav-bg-color: #2d3748;
             --nav-text-color: #cbd5e0;
         }
