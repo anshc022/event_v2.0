@@ -19,21 +19,19 @@ def home(request):
 
 def event_detail(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    today = datetime.date.today()  # Get today's date
     
     registered_teams_count = Registration.objects.filter(event=event).count()
     slots_left = event.max_teams - registered_teams_count
-    is_registration_open = event.registration_deadline >= today
+    total_slots = event.max_teams
+    slot_fill_percentage = (1 - (slots_left / total_slots)) * 100
     
     return render(request, 'events/event_detail.html', {
         'event': event,
         'slots_left': slots_left,
+        'slot_fill_percentage': slot_fill_percentage,
         'event_date': event.event_date,
         'event_time': event.event_time,
-        'is_registration_open': is_registration_open,
     })
-
-
 
 def register(request, event_id):
     event = get_object_or_404(Event, id=event_id)

@@ -13,13 +13,18 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
-            position: relative; /* Ensure the loading overlay covers the entire body */
+            background-color: rgba(18, 18, 18, 1); /* Dark background */
+            color: rgba(224, 224, 224, 1); /* Light text color */
+            position: relative;
+        }
+
+        .header, .footer {
+            background-color: rgba(30, 30, 30, 0.9); /* Slightly transparent dark background */
+            color: rgba(224, 224, 224, 1); /* Light text color */
         }
 
         .area {
-            background: #f2f2f2;
-            background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+            background: rgba(30, 30, 30, 0.9); /* Slightly transparent dark gradient */
             width: 100%;
             height: 100vh;
             position: fixed;
@@ -43,7 +48,7 @@
             list-style: none;
             width: 20px;
             height: 20px;
-            background: rgba(0, 0, 0, 0.861);
+            background: rgba(255, 255, 255, 0.3);
             animation: animate 25s linear infinite;
             bottom: -150px;
         }
@@ -137,20 +142,21 @@
         }
 
         .tile {
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #1e1e1e; /* Dark background for tiles */
+            color: #e0e0e0; /* Light text color */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .section-title {
-            border-bottom: 2px solid #e5e7eb;
+            border-bottom: 2px solid #333; /* Darker border for sections */
             padding-bottom: 5px;
             position: -webkit-sticky;
             position: sticky;
             top: 0;
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            background-color: #1e1e1e; /* Dark background */
             z-index: 10;
             margin: 0;
             padding-top: 10px;
@@ -158,26 +164,26 @@
 
         .section-title h2 {
             margin: 0;
+            color: #e0e0e0; /* Light text color */
         }
 
-        /* Loading overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000; /* Ensure it covers everything */
+            z-index: 1000;
         }
 
         .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #3498db; /* Loading spinner color */
+            border-top: 4px solid #3498db; /* Spinner color */
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
@@ -191,9 +197,10 @@
                 transform: rotate(360deg);
             }
         }
+
         footer {
-            background-color: #212121;
-            color: white;
+            background-color: #1e1e1e; /* Dark footer background */
+            color: #e0e0e0; /* Light text color */
             padding: 20px 0;
             text-align: center;
         }
@@ -201,24 +208,104 @@
         footer .footer-text {
             margin: 0;
             font-size: 1rem;
-        }    
-        .whatsapp-button {
-        display: inline-block;
-        background-color: #25D366; /* WhatsApp green color */
-        color: white;
-        padding: 8px 12px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
+        }
 
-    .whatsapp-button:hover {
-        background-color: #1ebe57; /* Darker shade for hover effect */
-    }   
+        .whatsapp-button {
+            display: inline-block;
+            background-color: #25D366; /* WhatsApp green color */
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #1ebe57; /* Darker shade for hover effect */
+        }
+
+        .bg-blue-800 {
+            background-color: #1e1e1e; /* Darker blue background */
+        }
+
+        .bg-blue-500 {
+            background-color: #3498db; /* Brighter blue */
+        }
+
+        .bg-blue-600 {
+            background-color: #2980b9; /* Darker blue */
+        }
+
+        .bg-green-500 {
+            background-color: #2ecc71; /* Bright green */
+        }
+
+        .bg-green-600 {
+            background-color: #27ae60; /* Darker green */
+        }
+
+        .text-white {
+            color: #e0e0e0; /* Light text color */
+        }
+
+        .text-gray-300 {
+            color: #b0b0b0; /* Light gray text color */
+        }
+
+        .text-gray-600 {
+            color: #8c8c8c; /* Gray text color */
+        }
+
+        .bg-gray-300 {
+            background-color: #2c2c2c; /* Dark gray background */
+        }
+
+        .bg-gray-400 {
+            background-color: #3a3a3a; /* Darker gray background */
+        }
+
+        .text-red-500 {
+            color: #e74c3c; /* Red text color */
+        }
+
+        .text-green-500 {
+            color: #2ecc71; /* Green text color */
+        }
+
+        .text-yellow-500 {
+            color: #f1c40f; /* Yellow text color */
+        }
+
+        .text-orange-500 {
+            color: #e67e22; /* Orange text color */
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1e1e1e; /* Dark background for bottom nav */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .bottom-nav a {
+            color: #e0e0e0; /* Light text color */
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .bottom-nav a:hover {
+            color: #3498db; /* Change color on hover */
+        }
     </style>
-</head>
+</head>>
 
 <body>
     <!-- Loading overlay -->
@@ -303,13 +390,30 @@
 <p><i class="fas fa-calendar-alt text-red-500"></i> <strong class="text-red-500">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}</p>
 <p><i class="fas fa-user-friends text-green-500"></i> <strong>Team Size:</strong> {{ event.team_size }}</p>
 <p><i class="fas fa-clock text-purple-500"></i> <strong>Registration Deadline:</strong> {{ event.registration_deadline }}</p>
-<p class="flex items-center"><i class="fas fa-ticket-alt text-blue-500 mr-2"></i> Slots Left: {{ slots_left }}</p>
+<p><i class="fas fa-map-marker-alt text-orange-500"></i> <strong class="text-orange-500">Location:</strong> {{ event.location }}</p>
+
+<p class="flex items-center mb-2">
+    <i class="fas fa-ticket-alt text-blue-500 mr-2"></i>
+    Slots Left:
+    <div class="relative w-full max-w-xs h-4 bg-gray-300 rounded-full overflow-hidden ml-2">
+        <div class="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style="width: {{ slot_fill_percentage }}%;"></div>
+        <div class="absolute top-0 left-0 h-full w-full flex items-center justify-center text-white text-xs">
+            {% if slots_left > 0 %}
+                {{ slots_left }} Slots Left
+            {% else %}
+                Slots Full
+            {% endif %}
+        </div>
+    </div>
+</p>
+
 <div class="mt-4" id="prizes">
     <h3 class="text-lg font-semibold"><i class="fas fa-trophy text-yellow-500"></i> Prizes</h3>
     <ul class="list-disc pl-5">
         {{ event.prizes | linebreaksbr }}
     </ul>
 </div>
+
 
             <!-- Event Description -->
             <div class="section-title">
@@ -408,7 +512,6 @@
         <p class="footer-text">Made with ♥ by Pranshu Chourasia VTU21413</p>
         <p class="footer-text">© Pranshu Chourasia</p>
         {% if event.customform_set.exists %}
-    <a href="{% url 'custom_form' event.customform_set.first.id %}" class="btn btn-primary">Fill Custom Form</a>
 {% endif %}
     </footer>
     <script>

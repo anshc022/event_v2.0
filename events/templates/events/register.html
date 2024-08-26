@@ -21,60 +21,83 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 80%;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--container-bg-color, #fff);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: rgba(52, 20, 20, 0.3); /* Semi-transparent background */
+            backdrop-filter: blur(10px); /* Blurring effect */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
             margin-top: 20px;
-            border-radius: 8px;
+            border-radius: 12px; /* Slightly rounded corners */
         }
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--heading-color, #333);
         }
+
         .input-field label {
             color: var(--label-color, #555);
         }
+
+        .input-field input {
+            color: var(--input-text-color, #000); /* Ensure text color is visible */
+            background-color: var(--input-bg-color, #fff); /* Background color for inputs */
+        }
+
         .input-field input:focus + label {
             color: var(--label-focus-color, #000);
         }
+
         .input-field input:focus {
             border-bottom: 1px solid var(--input-focus-border-color, #000);
             box-shadow: 0 1px 0 0 var(--input-focus-shadow-color, #000);
         }
+
+        .input-field input::placeholder {
+            color: var(--placeholder-color, #999); /* Placeholder text color */
+        }
+
         .btn {
             background-color: var(--button-bg-color, #007bff);
             color: var(--button-text-color, #fff);
             border-radius: 8px;
         }
+
         .btn:hover {
             background-color: var(--button-hover-bg-color, #0056b3);
         }
-        .nav-wrapper {
-            background-color: var(--nav-bg-color, #6d2515);
-            padding-left: 20px;
-            padding-right: 20px;
+
+        footer {
+            background-color: #212121;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
         }
-        .brand-logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--nav-text-color, #fff);
+
+        footer .footer-text {
+            margin: 0;
+            font-size: 1rem;
         }
-        .nav-links {
-            margin-left: auto;
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        .nav-links li {
-            margin-left: 1rem;
+
+        .modal.open {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .nav-links a {
-            color: var(--nav-text-color, #fff);
+
+        .modal.closed {
+            opacity: 0;
+            transform: translateY(-50px);
         }
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+
         /* Dark mode specific styles */
         body.dark-mode {
             --bg-color: #1a202c;
@@ -83,6 +106,8 @@
             --heading-color: #cbd5e0;
             --label-color: #cbd5e0;
             --label-focus-color: #cbd5e0;
+            --input-text-color: #cbd5e0; /* Text color for inputs in dark mode */
+            --input-bg-color: #2d3748; /* Background color for inputs in dark mode */
             --input-focus-border-color: #cbd5e0;
             --input-focus-shadow-color: #cbd5e0;
             --button-bg-color: #4a5568;
@@ -90,62 +115,197 @@
             --button-hover-bg-color: #2d3748;
             --nav-bg-color: #2d3748;
             --nav-text-color: #cbd5e0;
+            --placeholder-color: #888; /* Placeholder text color in dark mode */
         }
-        .messages {
-            margin-bottom: 20px;
+
+        /* Circles Background */
+        .area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Ensure circles are behind content */
         }
-        .alert {
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
+
+        .circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        .alert.error {
-            background-color: #f8d7da;
-            color: #721c24;
+
+        /* Circles Background with Glow Effect */
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(244, 244, 244, 0.3);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%; /* Ensure circles are round */
+            box-shadow: 0 0 15px rgba(25, 30, 134, 0.6); /* Glow effect */
         }
-        .alert.success {
-            background-color: #d4edda;
-            color: #155724;
+
+        .circles li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            box-shadow: 0 0 30px rgba(12, 26, 86, 0.6); /* Larger glow for bigger circles */
         }
-        footer {
-            background-color: #212121;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
+
+        .circles li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+            box-shadow: 0 0 15px rgba(89, 40, 194, 0.6); /* Glow effect */
         }
-        footer .footer-text {
-            margin: 0;
-            font-size: 1rem;
+
+        .circles li:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+            box-shadow: 0 0 15px rgba(0, 8, 255, 0.6); /* Glow effect */
         }
+
+        .circles li:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+            box-shadow: 0 0 25px rgba(30, 0, 255, 0.6); /* Slightly larger glow for medium circles */
+        }
+
+        .circles li:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+            box-shadow: 0 0 15px rgba(0, 21, 255, 0.6); /* Glow effect */
+        }
+
+        .circles li:nth-child(6) {
+            left: 75%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3s;
+            box-shadow: 0 0 30px rgba(230, 0, 255, 0.6); /* Larger glow for bigger circles */
+        }
+
+        .circles li:nth-child(7) {
+            left: 35%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 7s;
+            box-shadow: 0 0 40px rgba(212, 0, 255, 0.6); /* Larger glow for biggest circles */
+        }
+
+        .circles li:nth-child(8) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+            box-shadow: 0 0 15px rgba(200, 0, 255, 0.6); /* Glow effect */
+        }
+
+        .circles li:nth-child(9) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+            box-shadow: 0 0 15px rgba(255, 0, 111, 0.6); /* Glow effect */
+        }
+
+        .circles li:nth-child(10) {
+                left: 85%;
+                width: 150px;
+                height: 150px;
+                animation-delay: 0s;
+                animation-duration: 11s;
+                box-shadow: 0 0 40px rgba(255, 0, 55, 0.6); /* Larger glow for biggest circles */
+            }
+
+            @keyframes animate {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                    border-radius: 0;
+                }
+                100% {
+                    transform: translateY(-1000px) rotate(720deg);
+                    opacity: 0;
+                    border-radius: 50%;
+                }
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Bottom Navigation Bar */
+            .bottom-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg-color, #6d2515);
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding: 10px 0;
+                z-index: 1000;
+            }
+
+            .bottom-nav a {
+                color: var(--nav-text-color, #fff);
+                text-align: center;
+                font-size: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bottom-nav a i {
+                font-size: 2rem;
+            }
+
+            .bottom-nav a span {
+                font-size: 0.75rem;
+            }
+
+            .bottom-nav a:hover {
+                color: var(--button-hover-bg-color, #0056b3);
+            }
     </style>
 </head>
 <body>
-    <!-- Navigation bar -->
-    <nav>
-        <div class="nav-wrapper">
-            <a href="{% url 'home' %}" class="brand-logo">College Events</a>
-            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down nav-links">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Contact</a></li>
-                <li>
-                    <label for="dark-mode-switch">Dark Mode</label>
-                    <input type="checkbox" id="dark-mode-switch">
-                    <i class="material-icons">brightness_4</i>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Mobile Navigation (SideNav) -->
-    <ul class="sidenav" id="mobile-nav">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Contact</a></li>
-    </ul>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 
     <div class="container">
         <h1>Registration for {{ event.title }}</h1>
@@ -177,7 +337,6 @@
                 <i class="material-icons right">send</i>
             </button>
         </form>
-        
 
         <!-- WhatsApp Group Link Section -->
         {% if registration_complete %}
@@ -200,33 +359,60 @@
         <p class="footer-text">© Pranshu Chourasia</p>
     </footer>
 
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a href="#" id="back">
+            <i class="material-icons">arrow_back</i>
+            <span>Back</span>
+        </a>
+        <a href="{% url 'home' %}" id="home">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
+        <a href="#" id="menu" class="sidenav-trigger" data-target="mobile-nav">
+            <i class="material-icons">menu</i>
+            <span>Menu</span>
+        </a>
+        <a href="#" id="profile">
+            <i class="material-icons">person</i>
+            <span>Profile</span>
+        </a>
+    </div>
+
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Dark Mode Toggle JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
             // Initialize Materialize components
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
-            M.Modal.init(document.querySelectorAll('.modal'), { dismissible: false });
+            const modals = M.Modal.init(document.querySelectorAll('.modal'), { dismissible: false });
+
+            // Dark Mode Toggle Initialization
+            const darkModeSwitch = document.querySelector('#dark-mode-switch');
+            
+            // Check for previously set dark mode preference
+            const darkModePreference = JSON.parse(localStorage.getItem('darkMode'));
+            if (darkModePreference || darkModePreference === null) { // Use dark mode if preference is true or not set
+                document.body.classList.add('dark-mode');
+                darkModeSwitch.checked = true;
+            }
 
             // Open the modal on page load if registration_complete is true
             if ("{{ registration_complete|lower }}" === "true") {
-                M.Modal.getInstance(document.getElementById('popup')).open();
+                const popupModal = M.Modal.getInstance(document.getElementById('popup'));
+                if (popupModal) {
+                    popupModal.open();
+                }
             }
 
             // Dark Mode Toggle
-            const darkModeSwitch = document.querySelector('#dark-mode-switch');
             darkModeSwitch.addEventListener('change', () => {
                 document.body.classList.toggle('dark-mode');
                 localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
             });
-
-            // Check for previously set dark mode preference
-            if (JSON.parse(localStorage.getItem('darkMode')) || false) {
-                document.body.classList.add('dark-mode');
-                darkModeSwitch.checked = true;
-            }
         });
     </script>
 </body>
 </html>
+
