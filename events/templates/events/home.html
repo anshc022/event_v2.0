@@ -107,6 +107,21 @@
     }
 }
     
+.status-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .status-open {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .status-closed {
+            background-color: #F44336; /* Red */
+        }
     </style>
 </head>
 <body class="grey lighten-4">
@@ -180,6 +195,10 @@
                             <p class="dm-serif-display-regular registration-deadline">
                                 <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
                             </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
                         </div>
                         <div class="card-action">
                             <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
@@ -193,6 +212,10 @@
                             <p class="dm-serif-display-regular registration-deadline">
                                 <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
                             </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -212,15 +235,15 @@
                             <span class="card-title activator grey-text text-darken-4 dm-serif-display-regular event-title">{{ event.title }}<i class="material-icons right">more_vert</i></span>
                             <p class="dm-serif-display-regular">{{ event.description|truncatewords:10 }}</p>
                             <p class="dm-serif-display-regular event-date">
-                                <div class="bg-gray-100 border border-gray-300 p-4 rounded-lg shadow-md my-4">
-                                    <p class="dm-serif-display-regular event-date mb-2">
-                                        <strong class="text-blue-600">Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
-                                    </p>
-                                    <p class="dm-serif-display-regular registration-deadline">
-                                        <strong class="text-blue-600">Registration Deadline:</strong> {{ event.registration_deadline }}
-                                    </p>
-                                </div>
-                                
+                                <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
+                            </p>
+                            <p class="dm-serif-display-regular registration-deadline">
+                                <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
+                            </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
                         </div>
                         <div class="card-action">
                             <a href="{% url 'event_detail' event.id %}" class="blue-text text-darken-4 dm-serif-display-regular">Read more</a>
@@ -228,13 +251,16 @@
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-1 dm-serif-display-light event-title">{{ event.title }}<i class="material-icons right">close</i></span>
                             <p class="dm-serif-display-light grey-text text-darken-2">{{ event.description }}</p>
-                            
-                            <p class="dm-serif-display-regular  event-date">
+                            <p class="dm-serif-display-regular event-date">
                                 <strong>Event Date:</strong> {{ event.event_date }} at {{ event.event_time }}
                             </p>
                             <p class="dm-serif-display-regular registration-deadline">
                                 <strong>Registration Deadline:</strong> {{ event.registration_deadline }}
                             </p>
+                            <!-- Status Label -->
+                            <span class="status-label {% if event.registration_deadline >= today %}status-open{% else %}status-closed{% endif %}">
+                                {% if event.registration_deadline >= today %}Registration Open{% else %}Registration Closed{% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>
