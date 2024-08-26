@@ -72,8 +72,8 @@ def register(request, event_id):
                 event=event,
                 team_name=team_name,
                 members=members_data,  # Ensure this is properly formatted
-                domain=form.cleaned_data.get('domain'),
                 member1_email=form.cleaned_data.get('member1_email'),
+                member1_mobile_number=form.cleaned_data.get('member1_mobile_number')
             )
             registration.save()
 
@@ -92,6 +92,7 @@ def register(request, event_id):
         form = RegistrationForm(team_size=event.team_size)
     
     return render(request, 'events/register.html', {'form': form, 'event': event})
+
 
 def get_duplicate_vtu_number(event, members_data):
     registered_vtu_numbers = {member['vtu_number'] for registration in Registration.objects.filter(event=event) for member in registration.members}

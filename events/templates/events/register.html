@@ -99,24 +99,57 @@
         }
 
         /* Dark mode specific styles */
-        body.dark-mode {
-            --bg-color: #1a202c;
-            --text-color: #cbd5e0;
-            --container-bg-color: #2d3748;
-            --heading-color: #cbd5e0;
-            --label-color: #cbd5e0;
-            --label-focus-color: #cbd5e0;
-            --input-text-color: #cbd5e0; /* Text color for inputs in dark mode */
-            --input-bg-color: #2d3748; /* Background color for inputs in dark mode */
-            --input-focus-border-color: #cbd5e0;
-            --input-focus-shadow-color: #cbd5e0;
-            --button-bg-color: #4a5568;
-            --button-text-color: #cbd5e0;
-            --button-hover-bg-color: #2d3748;
-            --nav-bg-color: #2d3748;
-            --nav-text-color: #cbd5e0;
-            --placeholder-color: #888; /* Placeholder text color in dark mode */
-        }
+/* Dark mode specific styles */
+body.dark-mode {
+    --bg-color: #1a202c;
+    --text-color: #cbd5e0;
+    --container-bg-color: #2d3748;
+    --heading-color: #cbd5e0;
+    --label-color: #cbd5e0;
+    --label-focus-color: #cbd5e0;
+    --input-text-color: #cbd5e0; /* Text color for inputs in dark mode */
+    --input-bg-color: #2d3748; /* Background color for inputs in dark mode */
+    --input-focus-border-color: #cbd5e0;
+    --input-focus-shadow-color: #cbd5e0;
+    --button-bg-color: #4a5568;
+    --button-text-color: #cbd5e0;
+    --button-hover-bg-color: #2d3748;
+    --nav-bg-color: #2d3748;
+    --nav-text-color: #cbd5e0;
+    --placeholder-color: #888; /* Placeholder text color in dark mode */
+    --modal-bg-color: #2d3748; /* Background color for the modal in dark mode */
+    --modal-text-color: #cbd5e0; /* Text color for the modal in dark mode */
+    --modal-border-color: #cbd5e0; /* Border color for modal elements */
+}
+
+.modal {
+    background-color: var(--modal-bg-color, #fff); /* Default background color */
+    color: var(--modal-text-color, #000); /* Default text color */
+}
+
+.modal-content {
+    color: var(--modal-text-color, #000); /* Default text color */
+}
+
+.modal-footer {
+    background-color: var(--modal-bg-color, #fff); /* Default background color */
+    color: var(--modal-text-color, #000); /* Default text color */
+}
+
+.modal-close {
+    color: var(--modal-border-color, #000); /* Default close button color */
+}
+
+.btn {
+    background-color: var(--button-bg-color, #007bff);
+    color: var(--button-text-color, #fff);
+    border-radius: 8px;
+}
+
+.btn:hover {
+    background-color: var(--button-hover-bg-color, #0056b3);
+}
+
 
         /* Circles Background */
         .area {
@@ -229,66 +262,66 @@
         }
 
         .circles li:nth-child(10) {
-                left: 85%;
-                width: 150px;
-                height: 150px;
-                animation-delay: 0s;
-                animation-duration: 11s;
-                box-shadow: 0 0 40px rgba(255, 0, 55, 0.6); /* Larger glow for biggest circles */
-            }
+            left: 85%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 0s;
+            animation-duration: 11s;
+            box-shadow: 0 0 40px rgba(255, 0, 55, 0.6); /* Larger glow for biggest circles */
+        }
 
-            @keyframes animate {
-                0% {
-                    transform: translateY(0) rotate(0deg);
-                    opacity: 1;
-                    border-radius: 0;
-                }
-                100% {
-                    transform: translateY(-1000px) rotate(720deg);
-                    opacity: 0;
-                    border-radius: 50%;
-                }
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 0;
             }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
 
-            html {
-                scroll-behavior: smooth;
-            }
+        html {
+            scroll-behavior: smooth;
+        }
 
-            /* Bottom Navigation Bar */
-            .bottom-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background-color: var(--nav-bg-color, #6d2515);
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 10px 0;
-                z-index: 1000;
-            }
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg-color, #6d2515);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
 
-            .bottom-nav a {
-                color: var(--nav-text-color, #fff);
-                text-align: center;
-                font-size: 1.5rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
+        .bottom-nav a {
+            color: var(--nav-text-color, #fff);
+            text-align: center;
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-            .bottom-nav a i {
-                font-size: 2rem;
-            }
+        .bottom-nav a i {
+            font-size: 2rem;
+        }
 
-            .bottom-nav a span {
-                font-size: 0.75rem;
-            }
+        .bottom-nav a span {
+            font-size: 0.75rem;
+        }
 
-            .bottom-nav a:hover {
-                color: var(--button-hover-bg-color, #0056b3);
-            }
+        .bottom-nav a:hover {
+            color: var(--button-hover-bg-color, #0056b3);
+        }
     </style>
 </head>
 <body>
@@ -340,17 +373,18 @@
 
         <!-- WhatsApp Group Link Section -->
         {% if registration_complete %}
-            <div id="popup" class="modal">
-                <div class="modal-content">
-                    <h4>Congratulations!</h4>
-                    <p>Your registration for {{ event.title }} is successful.</p>
-                    <p>Join our WhatsApp group for further updates:</p>
-                    <a href="{{ event.whatsapp_group_link }}" class="btn waves-effect waves-light" target="_blank">Join WhatsApp Group</a>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-                </div>
+        <div id="popup" class="modal">
+            <div class="modal-content">
+                <h4>Congratulations!</h4>
+                <p>Your registration for {{ event.title }} is successful.</p>
+                <p>Join our WhatsApp group for further updates:</p>
+                <a href="{{ event.whatsapp_group_link }}" class="btn waves-effect waves-light" target="_blank">Join WhatsApp Group</a>
             </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+        
         {% endif %}
     </div>
 
@@ -383,27 +417,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Dark Mode Toggle JavaScript -->
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // Initialize Materialize components
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
-            const modals = M.Modal.init(document.querySelectorAll('.modal'), { dismissible: false });
+            M.Modal.init(document.querySelectorAll('.modal'), { dismissible: false });
+
+            // Open the modal on page load if registration_complete is true
+            if ("{{ registration_complete|lower }}" === "true") {
+                M.Modal.getInstance(document.getElementById('popup')).open();
+            }
 
             // Dark Mode Toggle Initialization
             const darkModeSwitch = document.querySelector('#dark-mode-switch');
             
             // Check for previously set dark mode preference
             const darkModePreference = JSON.parse(localStorage.getItem('darkMode'));
-            if (darkModePreference || darkModePreference === null) { // Use dark mode if preference is true or not set
+            if (darkModePreference) { // Use dark mode if preference is true
                 document.body.classList.add('dark-mode');
                 darkModeSwitch.checked = true;
-            }
-
-            // Open the modal on page load if registration_complete is true
-            if ("{{ registration_complete|lower }}" === "true") {
-                const popupModal = M.Modal.getInstance(document.getElementById('popup'));
-                if (popupModal) {
-                    popupModal.open();
-                }
             }
 
             // Dark Mode Toggle
@@ -415,4 +446,3 @@
     </script>
 </body>
 </html>
-
