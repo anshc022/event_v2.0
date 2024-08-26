@@ -22,14 +22,16 @@ def event_detail(request, event_id):
     
     registered_teams_count = Registration.objects.filter(event=event).count()
     slots_left = event.max_teams - registered_teams_count
-    is_registration_open = event.registration_deadline >= datetime.date.today()
+    today = datetime.date.today()  # Get today's date
+    is_registration_open = event.registration_deadline >= today
     
     return render(request, 'events/event_detail.html', {
         'event': event,
         'slots_left': slots_left,
         'event_date': event.event_date,
         'event_time': event.event_time,
-        'is_registration_open': is_registration_open
+        'is_registration_open': is_registration_open,
+        'today': today
     })
 
 
