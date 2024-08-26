@@ -10,19 +10,16 @@ import datetime
 
 def home(request):
     today = datetime.date.today()
-    upcoming_events = Event.objects.filter(event_date__gte=today)
-    past_events = Event.objects.filter(event_date__lt=today)
-    return render(request, 'events/home.html', {
-        'upcoming_events': upcoming_events,
-        'past_events': past_events
-    })
+    upcoming_events = Event.objects.filter(registration_deadline__gte=today)
+    past_events = Event.objects.filter(registration_deadline__lt=today)
+    return render(request, 'events/home.html', {'upcoming_events': upcoming_events, 'past_events': past_events})
 
 def event_detail(request, event_id):
     event = get_object_or_404(Event, id=event_id)
+    today = datetime.date.today()  # Get today's date
     
     registered_teams_count = Registration.objects.filter(event=event).count()
     slots_left = event.max_teams - registered_teams_count
-    today = datetime.date.today()  # Get today's date
     is_registration_open = event.registration_deadline >= today
     
     return render(request, 'events/event_detail.html', {
@@ -31,7 +28,6 @@ def event_detail(request, event_id):
         'event_date': event.event_date,
         'event_time': event.event_time,
         'is_registration_open': is_registration_open,
-        'today': today
     })
 
 
