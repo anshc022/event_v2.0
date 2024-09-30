@@ -52,6 +52,7 @@ class Registration(models.Model):
     members = models.JSONField(default=list)
     member1_email = models.EmailField(blank=True, null=True, default='no-reply@example.com')
     member1_mobile_number = models.CharField(max_length=15, blank=True, null=True)
+    link = models.URLField(blank=True, null=True)  # Added link field
 
     def __str__(self):
         return self.team_name

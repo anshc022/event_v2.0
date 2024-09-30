@@ -30,6 +30,9 @@ class RegistrationForm(forms.ModelForm):
             self.fields[f'member{i}_vtu_number'] = forms.CharField(max_length=20, label=f'Member {i} VTU Number')
             self.fields[f'member{i}_year'] = forms.IntegerField(label=f'Member {i} Year')
 
+        # Add a link field
+        self.fields['link'] = forms.URLField(label='Link', required=False)
+
     def clean_member1_email(self):
         email = self.cleaned_data.get('member1_email')
         if email and not email.endswith('@veltech.edu.in'):
@@ -60,4 +63,4 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Registration
-        fields = ['team_name', 'member1_email', 'member1_mobile_number']
+        fields = ['team_name', 'member1_email', 'member1_mobile_number', 'link']  # Include the new link field
